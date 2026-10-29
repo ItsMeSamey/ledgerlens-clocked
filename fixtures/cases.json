@@ -1,0 +1,250 @@
+[
+  {
+    "id": "matched",
+    "name": "Matched invoice",
+    "invoice": "INVOICE\nVendor: Paperbark Office Co\nInvoice number: INV-2026-184\nPO reference: PO-1042\nCurrency: AUD\nSubtotal: 1,200.00\nTax: 120.00\nTotal: 1,320.00\nDue date: 12 November 2026\nPayment terms: Net 14 days\nDescription: 12 ergonomic desk chairs, delivered 28 October 2026.",
+    "order": "PURCHASE ORDER\nPO number: PO-1042\nVendor: Paperbark Office Co\nCurrency: AUD\nAuthorized total: 1,320.00\nDescription: 12 ergonomic desk chairs including delivery.",
+    "expected_status": "READY_FOR_REVIEW",
+    "expected_failed_checks": [],
+    "expected_fields": {
+      "vendor": "Paperbark Office Co",
+      "total": "1,320.00",
+      "order_total": "1,320.00",
+      "due_date": "12 November 2026"
+    }
+  },
+  {
+    "id": "over_budget",
+    "name": "Invoice exceeds the order",
+    "invoice": "INVOICE\nVendor: Paperbark Office Co\nInvoice number: INV-2026-184\nPO reference: PO-1042\nCurrency: AUD\nSubtotal: 1,300.00\nTax: 130.00\nTotal: 1,430.00\nDue date: 12 November 2026\nPayment terms: Net 14 days\nDescription: 12 ergonomic desk chairs, delivered 28 October 2026.",
+    "order": "PURCHASE ORDER\nPO number: PO-1042\nVendor: Paperbark Office Co\nCurrency: AUD\nAuthorized total: 1,320.00\nDescription: 12 ergonomic desk chairs including delivery.",
+    "expected_status": "HOLD",
+    "expected_failed_checks": [
+      "order_limit"
+    ],
+    "expected_fields": {
+      "total": "1,430.00",
+      "order_total": "1,320.00"
+    }
+  },
+  {
+    "id": "arithmetic",
+    "name": "A total that does not add up",
+    "invoice": "INVOICE\nVendor: Paperbark Office Co\nInvoice number: INV-2026-184\nPO reference: PO-1042\nCurrency: AUD\nSubtotal: 1,200.00\nTax: 120.00\nTotal: 1,310.00\nDue date: 12 November 2026\nPayment terms: Net 14 days\nDescription: 12 ergonomic desk chairs, delivered 28 October 2026.",
+    "order": "PURCHASE ORDER\nPO number: PO-1042\nVendor: Paperbark Office Co\nCurrency: AUD\nAuthorized total: 1,320.00\nDescription: 12 ergonomic desk chairs including delivery.",
+    "expected_status": "HOLD",
+    "expected_failed_checks": [
+      "arithmetic"
+    ],
+    "expected_fields": {}
+  },
+  {
+    "id": "wrong_order",
+    "name": "Wrong purchase order reference",
+    "invoice": "INVOICE\nVendor: Paperbark Office Co\nInvoice number: INV-2026-184\nPO reference: PO-1043\nCurrency: AUD\nSubtotal: 1,200.00\nTax: 120.00\nTotal: 1,320.00\nDue date: 12 November 2026\nPayment terms: Net 14 days\nDescription: 12 ergonomic desk chairs, delivered 28 October 2026.",
+    "order": "PURCHASE ORDER\nPO number: PO-1042\nVendor: Paperbark Office Co\nCurrency: AUD\nAuthorized total: 1,320.00\nDescription: 12 ergonomic desk chairs including delivery.",
+    "expected_status": "HOLD",
+    "expected_failed_checks": [
+      "po_reference"
+    ],
+    "expected_fields": {}
+  },
+  {
+    "id": "currency",
+    "name": "Different currencies",
+    "invoice": "INVOICE\nVendor: Paperbark Office Co\nInvoice number: INV-2026-184\nPO reference: PO-1042\nCurrency: USD\nSubtotal: 1,200.00\nTax: 120.00\nTotal: 1,320.00\nDue date: 12 November 2026\nPayment terms: Net 14 days\nDescription: 12 ergonomic desk chairs, delivered 28 October 2026.",
+    "order": "PURCHASE ORDER\nPO number: PO-1042\nVendor: Paperbark Office Co\nCurrency: AUD\nAuthorized total: 1,320.00\nDescription: 12 ergonomic desk chairs including delivery.",
+    "expected_status": "HOLD",
+    "expected_failed_checks": [
+      "currency"
+    ],
+    "expected_fields": {}
+  },
+  {
+    "id": "missing_tax",
+    "name": "Tax is absent, not zero",
+    "invoice": "INVOICE\nVendor: Paperbark Office Co\nInvoice number: INV-2026-184\nPO reference: PO-1042\nCurrency: AUD\nSubtotal: 1,200.00\nTotal: 1,320.00\nDue date: 12 November 2026\nPayment terms: Net 14 days\nDescription: 12 ergonomic desk chairs, delivered 28 October 2026.",
+    "order": "PURCHASE ORDER\nPO number: PO-1042\nVendor: Paperbark Office Co\nCurrency: AUD\nAuthorized total: 1,320.00\nDescription: 12 ergonomic desk chairs including delivery.",
+    "expected_status": "HOLD",
+    "expected_failed_checks": [
+      "required_facts"
+    ],
+    "expected_fields": {
+      "tax": null,
+      "total": "1,320.00"
+    }
+  },
+  {
+    "id": "wrong_vendor",
+    "name": "Different supplier",
+    "invoice": "INVOICE\nVendor: Banksia Furnishings\nInvoice number: INV-2026-184\nPO reference: PO-1042\nCurrency: AUD\nSubtotal: 1,200.00\nTax: 120.00\nTotal: 1,320.00\nDue date: 12 November 2026\nPayment terms: Net 14 days\nDescription: 12 ergonomic desk chairs, delivered 28 October 2026.",
+    "order": "PURCHASE ORDER\nPO number: PO-1042\nVendor: Paperbark Office Co\nCurrency: AUD\nAuthorized total: 1,320.00\nDescription: 12 ergonomic desk chairs including delivery.",
+    "expected_status": "HOLD",
+    "expected_failed_checks": [
+      "supplier"
+    ],
+    "expected_fields": {}
+  },
+  {
+    "id": "duplicate_total",
+    "name": "Conflicting totals",
+    "invoice": "INVOICE\nVendor: Paperbark Office Co\nInvoice number: INV-2026-184\nPO reference: PO-1042\nCurrency: AUD\nSubtotal: 1,200.00\nTax: 120.00\nTotal: 1,320.00\nDue date: 12 November 2026\nPayment terms: Net 14 days\nDescription: 12 ergonomic desk chairs, delivered 28 October 2026.\nTotal: 1,420.00",
+    "order": "PURCHASE ORDER\nPO number: PO-1042\nVendor: Paperbark Office Co\nCurrency: AUD\nAuthorized total: 1,320.00\nDescription: 12 ergonomic desk chairs including delivery.",
+    "expected_status": "HOLD",
+    "expected_failed_checks": [
+      "required_facts"
+    ],
+    "expected_fields": {
+      "total": null
+    }
+  },
+  {
+    "id": "quote",
+    "name": "Quote, not an invoice",
+    "invoice": "QUOTE\nVendor: Paperbark Office Co\nInvoice number: INV-2026-184\nPO reference: PO-1042\nCurrency: AUD\nSubtotal: 1,200.00\nTax: 120.00\nTotal: 1,320.00\nDue date: 12 November 2026\nPayment terms: Net 14 days\nDescription: 12 ergonomic desk chairs, delivered 28 October 2026.",
+    "order": "PURCHASE ORDER\nPO number: PO-1042\nVendor: Paperbark Office Co\nCurrency: AUD\nAuthorized total: 1,320.00\nDescription: 12 ergonomic desk chairs including delivery.",
+    "expected_status": "HOLD",
+    "expected_failed_checks": [
+      "document_type"
+    ],
+    "expected_fields": {}
+  },
+  {
+    "id": "credit",
+    "name": "Credit note",
+    "invoice": "CREDIT NOTE\nVendor: Paperbark Office Co\nInvoice number: INV-2026-184\nPO reference: PO-1042\nCurrency: AUD\nSubtotal: 1,200.00\nTax: 120.00\nTotal: 1,320.00\nDue date: 12 November 2026\nPayment terms: Net 14 days\nDescription: 12 ergonomic desk chairs, delivered 28 October 2026.",
+    "order": "PURCHASE ORDER\nPO number: PO-1042\nVendor: Paperbark Office Co\nCurrency: AUD\nAuthorized total: 1,320.00\nDescription: 12 ergonomic desk chairs including delivery.",
+    "expected_status": "HOLD",
+    "expected_failed_checks": [
+      "document_type"
+    ],
+    "expected_fields": {}
+  },
+  {
+    "id": "missing_order",
+    "name": "No purchase order supplied",
+    "invoice": "INVOICE\nVendor: Paperbark Office Co\nInvoice number: INV-2026-184\nPO reference: PO-1042\nCurrency: AUD\nSubtotal: 1,200.00\nTax: 120.00\nTotal: 1,320.00\nDue date: 12 November 2026\nPayment terms: Net 14 days\nDescription: 12 ergonomic desk chairs, delivered 28 October 2026.",
+    "order": "",
+    "expected_status": "HOLD",
+    "expected_failed_checks": [
+      "required_facts"
+    ],
+    "expected_fields": {
+      "order_id": null,
+      "order_vendor": null,
+      "order_total": null
+    }
+  },
+  {
+    "id": "decimal_comma",
+    "name": "Ambiguous decimal separators",
+    "invoice": "INVOICE\nVendor: Paperbark Office Co\nInvoice number: INV-2026-184\nPO reference: PO-1042\nCurrency: AUD\nSubtotal: 1.200,00\nTax: 120.00\nTotal: 1,320.00\nDue date: 12 November 2026\nPayment terms: Net 14 days\nDescription: 12 ergonomic desk chairs, delivered 28 October 2026.",
+    "order": "PURCHASE ORDER\nPO number: PO-1042\nVendor: Paperbark Office Co\nCurrency: AUD\nAuthorized total: 1,320.00\nDescription: 12 ergonomic desk chairs including delivery.",
+    "expected_status": "HOLD",
+    "expected_failed_checks": [
+      "amount_subtotal"
+    ],
+    "expected_fields": {}
+  },
+  {
+    "id": "negative",
+    "name": "Negative amount",
+    "invoice": "INVOICE\nVendor: Paperbark Office Co\nInvoice number: INV-2026-184\nPO reference: PO-1042\nCurrency: AUD\nSubtotal: -1,200.00\nTax: 120.00\nTotal: 1,320.00\nDue date: 12 November 2026\nPayment terms: Net 14 days\nDescription: 12 ergonomic desk chairs, delivered 28 October 2026.",
+    "order": "PURCHASE ORDER\nPO number: PO-1042\nVendor: Paperbark Office Co\nCurrency: AUD\nAuthorized total: 1,320.00\nDescription: 12 ergonomic desk chairs including delivery.",
+    "expected_status": "HOLD",
+    "expected_failed_checks": [
+      "nonnegative_subtotal",
+      "arithmetic"
+    ],
+    "expected_fields": {}
+  },
+  {
+    "id": "unicode",
+    "name": "Unicode supplier and source",
+    "invoice": "INVOICE\nVendor: 🌳 Café Furnishings\nInvoice number: INV-2026-184\nPO reference: PO-1042\nCurrency: AUD\nSubtotal: 1,200.00\nTax: 120.00\nTotal: 1,320.00\nDue date: 12 November 2026\nPayment terms: Net 14 days\nDescription: 12 ergonomic desk chairs, delivered 28 October 2026.",
+    "order": "PURCHASE ORDER\nPO number: PO-1042\nVendor: 🌳 Café Furnishings\nCurrency: AUD\nAuthorized total: 1,320.00\nDescription: 12 ergonomic desk chairs including delivery.",
+    "expected_status": "READY_FOR_REVIEW",
+    "expected_failed_checks": [],
+    "expected_fields": {
+      "vendor": "🌳 Café Furnishings",
+      "total": "1,320.00"
+    }
+  },
+  {
+    "id": "unsupported_currency",
+    "name": "Unsupported currency code",
+    "invoice": "INVOICE\nVendor: Paperbark Office Co\nInvoice number: INV-2026-184\nPO reference: PO-1042\nCurrency: ZZZ\nSubtotal: 1,200.00\nTax: 120.00\nTotal: 1,320.00\nDue date: 12 November 2026\nPayment terms: Net 14 days\nDescription: 12 ergonomic desk chairs, delivered 28 October 2026.",
+    "order": "PURCHASE ORDER\nPO number: PO-1042\nVendor: Paperbark Office Co\nCurrency: ZZZ\nAuthorized total: 1,320.00\nDescription: 12 ergonomic desk chairs including delivery.",
+    "expected_status": "HOLD",
+    "expected_failed_checks": [
+      "currency"
+    ],
+    "expected_fields": {}
+  },
+  {
+    "id": "huge",
+    "name": "Amount beyond supported precision",
+    "invoice": "INVOICE\nVendor: Paperbark Office Co\nInvoice number: INV-2026-184\nPO reference: PO-1042\nCurrency: AUD\nSubtotal: 1000000000000000000000000000000\nTax: 0\nTotal: 1000000000000000000000000000001\nDue date: 12 November 2026\nPayment terms: Net 14 days\nDescription: 12 ergonomic desk chairs, delivered 28 October 2026.",
+    "order": "PURCHASE ORDER\nPO number: PO-1042\nVendor: Paperbark Office Co\nCurrency: AUD\nAuthorized total: 1,320.00\nDescription: 12 ergonomic desk chairs including delivery.",
+    "expected_status": "HOLD",
+    "expected_failed_checks": [
+      "amount_subtotal",
+      "amount_total"
+    ],
+    "expected_fields": {}
+  },
+  {
+    "id": "partial",
+    "name": "Invoice below the authorized limit",
+    "invoice": "INVOICE\nVendor: Paperbark Office Co\nInvoice number: INV-2026-184\nPO reference: PO-1042\nCurrency: AUD\nSubtotal: 600.00\nTax: 60.00\nTotal: 660.00\nDue date: 12 November 2026\nPayment terms: Net 14 days\nDescription: 12 ergonomic desk chairs, delivered 28 October 2026.",
+    "order": "PURCHASE ORDER\nPO number: PO-1042\nVendor: Paperbark Office Co\nCurrency: AUD\nAuthorized total: 1,320.00\nDescription: 12 ergonomic desk chairs including delivery.",
+    "expected_status": "READY_FOR_REVIEW",
+    "expected_failed_checks": [],
+    "expected_fields": {}
+  },
+  {
+    "id": "crlf",
+    "name": "Windows line endings",
+    "invoice": "INVOICE\r\nVendor: Paperbark Office Co\r\nInvoice number: INV-2026-184\r\nPO reference: PO-1042\r\nCurrency: AUD\r\nSubtotal: 1,200.00\r\nTax: 120.00\r\nTotal: 1,320.00\r\nDue date: 12 November 2026\r\nPayment terms: Net 14 days\r\nDescription: 12 ergonomic desk chairs, delivered 28 October 2026.",
+    "order": "PURCHASE ORDER\r\nPO number: PO-1042\r\nVendor: Paperbark Office Co\r\nCurrency: AUD\r\nAuthorized total: 1,320.00\r\nDescription: 12 ergonomic desk chairs including delivery.",
+    "expected_status": "READY_FOR_REVIEW",
+    "expected_failed_checks": [],
+    "expected_fields": {}
+  },
+  {
+    "id": "missing_vendor",
+    "name": "Do not borrow the order supplier",
+    "invoice": "INVOICE\nInvoice number: INV-2026-184\nPO reference: PO-1042\nCurrency: AUD\nSubtotal: 1,200.00\nTax: 120.00\nTotal: 1,320.00\nDue date: 12 November 2026\nPayment terms: Net 14 days\nDescription: 12 ergonomic desk chairs, delivered 28 October 2026.",
+    "order": "PURCHASE ORDER\nPO number: PO-1042\nVendor: Paperbark Office Co\nCurrency: AUD\nAuthorized total: 1,320.00\nDescription: 12 ergonomic desk chairs including delivery.",
+    "expected_status": "HOLD",
+    "expected_failed_checks": [
+      "required_facts"
+    ],
+    "expected_fields": {
+      "vendor": null,
+      "order_vendor": "Paperbark Office Co"
+    }
+  },
+  {
+    "id": "freeform",
+    "name": "Free-form text (offline limitation)",
+    "invoice": "Tax invoice INV-2026-184 from Paperbark Office Co. Purchase order PO-1042. In AUD, the subtotal is 1,200.00, tax is 120.00 and the amount due is 1,320.00. Pay by 12 November 2026.",
+    "order": "PURCHASE ORDER\nPO number: PO-1042\nVendor: Paperbark Office Co\nCurrency: AUD\nAuthorized total: 1,320.00\nDescription: 12 ergonomic desk chairs including delivery.",
+    "expected_status": "READY_FOR_REVIEW",
+    "expected_failed_checks": [],
+    "expected_fields": {
+      "vendor": "Paperbark Office Co",
+      "invoice_id": "INV-2026-184",
+      "purchase_order_id": "PO-1042",
+      "currency": "AUD",
+      "subtotal": "1,200.00",
+      "tax": "120.00",
+      "total": "1,320.00",
+      "due_date": "12 November 2026",
+      "order_id": "PO-1042",
+      "order_vendor": "Paperbark Office Co",
+      "order_currency": "AUD",
+      "order_total": "1,320.00"
+    }
+  }
+]

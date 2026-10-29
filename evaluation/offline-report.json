@@ -1,0 +1,307 @@
+{
+  "mode": "offline",
+  "dataset": "20 author-written synthetic cases; not independent or held-out; one intentionally unsupported free-form case",
+  "claim_limit": "Offline metrics measure the label parser and deterministic policy only. No API accuracy, latency or cost claims can be drawn from offline results.",
+  "case_count": 20,
+  "status_correct": 19,
+  "status_accuracy": 0.95,
+  "unsafe_ready_count": 0,
+  "labelled_fields": 28,
+  "exact_field_accuracy": 0.7142857142857143,
+  "non_null_exact_precision": 1.0,
+  "api_calls": 0,
+  "cases": [
+    {
+      "id": "matched",
+      "expected_status": "READY_FOR_REVIEW",
+      "actual_status": "READY_FOR_REVIEW",
+      "status_correct": true,
+      "required_issues_found": true,
+      "expected_fields": {
+        "vendor": "Paperbark Office Co",
+        "total": "1,320.00",
+        "order_total": "1,320.00",
+        "due_date": "12 November 2026"
+      },
+      "actual_fields": {
+        "vendor": "Paperbark Office Co",
+        "total": "1,320.00",
+        "order_total": "1,320.00",
+        "due_date": "12 November 2026"
+      },
+      "latency_ms": 2.438,
+      "trace": []
+    },
+    {
+      "id": "over_budget",
+      "expected_status": "HOLD",
+      "actual_status": "HOLD",
+      "status_correct": true,
+      "required_issues_found": true,
+      "expected_fields": {
+        "total": "1,430.00",
+        "order_total": "1,320.00"
+      },
+      "actual_fields": {
+        "total": "1,430.00",
+        "order_total": "1,320.00"
+      },
+      "latency_ms": 0.312,
+      "trace": []
+    },
+    {
+      "id": "arithmetic",
+      "expected_status": "HOLD",
+      "actual_status": "HOLD",
+      "status_correct": true,
+      "required_issues_found": true,
+      "expected_fields": {},
+      "actual_fields": {},
+      "latency_ms": 0.227,
+      "trace": []
+    },
+    {
+      "id": "wrong_order",
+      "expected_status": "HOLD",
+      "actual_status": "HOLD",
+      "status_correct": true,
+      "required_issues_found": true,
+      "expected_fields": {},
+      "actual_fields": {},
+      "latency_ms": 0.211,
+      "trace": []
+    },
+    {
+      "id": "currency",
+      "expected_status": "HOLD",
+      "actual_status": "HOLD",
+      "status_correct": true,
+      "required_issues_found": true,
+      "expected_fields": {},
+      "actual_fields": {},
+      "latency_ms": 0.227,
+      "trace": []
+    },
+    {
+      "id": "missing_tax",
+      "expected_status": "HOLD",
+      "actual_status": "HOLD",
+      "status_correct": true,
+      "required_issues_found": true,
+      "expected_fields": {
+        "tax": null,
+        "total": "1,320.00"
+      },
+      "actual_fields": {
+        "tax": null,
+        "total": "1,320.00"
+      },
+      "latency_ms": 0.214,
+      "trace": []
+    },
+    {
+      "id": "wrong_vendor",
+      "expected_status": "HOLD",
+      "actual_status": "HOLD",
+      "status_correct": true,
+      "required_issues_found": true,
+      "expected_fields": {},
+      "actual_fields": {},
+      "latency_ms": 0.234,
+      "trace": []
+    },
+    {
+      "id": "duplicate_total",
+      "expected_status": "HOLD",
+      "actual_status": "HOLD",
+      "status_correct": true,
+      "required_issues_found": true,
+      "expected_fields": {
+        "total": null
+      },
+      "actual_fields": {
+        "total": null
+      },
+      "latency_ms": 0.224,
+      "trace": []
+    },
+    {
+      "id": "quote",
+      "expected_status": "HOLD",
+      "actual_status": "HOLD",
+      "status_correct": true,
+      "required_issues_found": true,
+      "expected_fields": {},
+      "actual_fields": {},
+      "latency_ms": 0.237,
+      "trace": []
+    },
+    {
+      "id": "credit",
+      "expected_status": "HOLD",
+      "actual_status": "HOLD",
+      "status_correct": true,
+      "required_issues_found": true,
+      "expected_fields": {},
+      "actual_fields": {},
+      "latency_ms": 0.222,
+      "trace": []
+    },
+    {
+      "id": "missing_order",
+      "expected_status": "HOLD",
+      "actual_status": "HOLD",
+      "status_correct": true,
+      "required_issues_found": true,
+      "expected_fields": {
+        "order_id": null,
+        "order_vendor": null,
+        "order_total": null
+      },
+      "actual_fields": {
+        "order_id": null,
+        "order_vendor": null,
+        "order_total": null
+      },
+      "latency_ms": 0.194,
+      "trace": []
+    },
+    {
+      "id": "decimal_comma",
+      "expected_status": "HOLD",
+      "actual_status": "HOLD",
+      "status_correct": true,
+      "required_issues_found": true,
+      "expected_fields": {},
+      "actual_fields": {},
+      "latency_ms": 0.207,
+      "trace": []
+    },
+    {
+      "id": "negative",
+      "expected_status": "HOLD",
+      "actual_status": "HOLD",
+      "status_correct": true,
+      "required_issues_found": true,
+      "expected_fields": {},
+      "actual_fields": {},
+      "latency_ms": 0.208,
+      "trace": []
+    },
+    {
+      "id": "unicode",
+      "expected_status": "READY_FOR_REVIEW",
+      "actual_status": "READY_FOR_REVIEW",
+      "status_correct": true,
+      "required_issues_found": true,
+      "expected_fields": {
+        "vendor": "🌳 Café Furnishings",
+        "total": "1,320.00"
+      },
+      "actual_fields": {
+        "vendor": "🌳 Café Furnishings",
+        "total": "1,320.00"
+      },
+      "latency_ms": 0.254,
+      "trace": []
+    },
+    {
+      "id": "unsupported_currency",
+      "expected_status": "HOLD",
+      "actual_status": "HOLD",
+      "status_correct": true,
+      "required_issues_found": true,
+      "expected_fields": {},
+      "actual_fields": {},
+      "latency_ms": 0.204,
+      "trace": []
+    },
+    {
+      "id": "huge",
+      "expected_status": "HOLD",
+      "actual_status": "HOLD",
+      "status_correct": true,
+      "required_issues_found": true,
+      "expected_fields": {},
+      "actual_fields": {},
+      "latency_ms": 0.209,
+      "trace": []
+    },
+    {
+      "id": "partial",
+      "expected_status": "READY_FOR_REVIEW",
+      "actual_status": "READY_FOR_REVIEW",
+      "status_correct": true,
+      "required_issues_found": true,
+      "expected_fields": {},
+      "actual_fields": {},
+      "latency_ms": 0.205,
+      "trace": []
+    },
+    {
+      "id": "crlf",
+      "expected_status": "READY_FOR_REVIEW",
+      "actual_status": "READY_FOR_REVIEW",
+      "status_correct": true,
+      "required_issues_found": true,
+      "expected_fields": {},
+      "actual_fields": {},
+      "latency_ms": 0.197,
+      "trace": []
+    },
+    {
+      "id": "missing_vendor",
+      "expected_status": "HOLD",
+      "actual_status": "HOLD",
+      "status_correct": true,
+      "required_issues_found": true,
+      "expected_fields": {
+        "vendor": null,
+        "order_vendor": "Paperbark Office Co"
+      },
+      "actual_fields": {
+        "vendor": null,
+        "order_vendor": "Paperbark Office Co"
+      },
+      "latency_ms": 0.199,
+      "trace": []
+    },
+    {
+      "id": "freeform",
+      "expected_status": "READY_FOR_REVIEW",
+      "actual_status": "HOLD",
+      "status_correct": false,
+      "required_issues_found": true,
+      "expected_fields": {
+        "vendor": "Paperbark Office Co",
+        "invoice_id": "INV-2026-184",
+        "purchase_order_id": "PO-1042",
+        "currency": "AUD",
+        "subtotal": "1,200.00",
+        "tax": "120.00",
+        "total": "1,320.00",
+        "due_date": "12 November 2026",
+        "order_id": "PO-1042",
+        "order_vendor": "Paperbark Office Co",
+        "order_currency": "AUD",
+        "order_total": "1,320.00"
+      },
+      "actual_fields": {
+        "vendor": null,
+        "invoice_id": null,
+        "purchase_order_id": null,
+        "currency": null,
+        "subtotal": null,
+        "tax": null,
+        "total": null,
+        "due_date": null,
+        "order_id": "PO-1042",
+        "order_vendor": "Paperbark Office Co",
+        "order_currency": "AUD",
+        "order_total": "1,320.00"
+      },
+      "latency_ms": 0.156,
+      "trace": []
+    }
+  ]
+}

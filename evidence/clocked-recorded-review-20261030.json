@@ -1,0 +1,273 @@
+{
+  "provenance": {
+    "kind": "recorded_live_result",
+    "captured_utc": "2026-10-30T10:45:09.305906+00:00",
+    "no_api_request_on_view": true,
+    "fixture_is_fictional": true
+  },
+  "review": {
+    "app": "LedgerLens",
+    "policy_version": 2,
+    "run_id": "40de52e0-952c-4467-b009-a8d9906f86b2",
+    "mode": "live",
+    "mode_label": "LIVE CLOCKED API",
+    "source_sha256": "e50130f1f91c66ce65a177e4d53c6d569afdd826cf33397a4aefe87bbb56c4f6",
+    "source": "=== INVOICE SOURCE ===\nINVOICE\nVendor: Paperbark Office Co\nInvoice number: INV-2026-184\nPO reference: PO-1042\nCurrency: AUD\nSubtotal: 1,200.00\nTax: 120.00\nTotal: 1,320.00\nDue date: 12 November 2026\nPayment terms: Net 14 days\nDescription: 12 ergonomic desk chairs, delivered 28 October 2026.\n=== PURCHASE ORDER SOURCE ===\nPURCHASE ORDER\nPO number: PO-1042\nVendor: Paperbark Office Co\nCurrency: AUD\nAuthorized total: 1,320.00\nDescription: 12 ergonomic desk chairs including delivery.",
+    "ranges": {
+      "invoice": [
+        23,
+        290
+      ],
+      "order": [
+        321,
+        481
+      ]
+    },
+    "classification": {
+      "label": "invoice",
+      "confidence": 0.9962,
+      "probabilities": {
+        "invoice": 0.9972,
+        "quote": 0.001,
+        "credit_note": 0.001,
+        "not_established": 0.0009
+      }
+    },
+    "fields": {
+      "vendor": {
+        "value": "Paperbark Office Co",
+        "start": 39,
+        "end": 58,
+        "confidence": 0.9999999995453437
+      },
+      "invoice_id": {
+        "value": "INV-2026-184",
+        "start": 75,
+        "end": 87,
+        "confidence": 0.999999999813044
+      },
+      "purchase_order_id": {
+        "value": "PO-1042",
+        "start": 102,
+        "end": 109,
+        "confidence": 0.9999999997710063
+      },
+      "currency": {
+        "value": "AUD",
+        "start": 120,
+        "end": 123,
+        "confidence": 0.999999999718584
+      },
+      "subtotal": {
+        "value": "1,200.00",
+        "start": 134,
+        "end": 142,
+        "confidence": 0.9999999996066238
+      },
+      "tax": {
+        "value": "120.00",
+        "start": 148,
+        "end": 154,
+        "confidence": 0.9999999997641491
+      },
+      "total": {
+        "value": "1,320.00",
+        "start": 162,
+        "end": 170,
+        "confidence": 0.9999999995002169
+      },
+      "due_date": {
+        "value": "12 November 2026",
+        "start": 181,
+        "end": 197,
+        "confidence": 0.9999999995321431
+      },
+      "order_id": {
+        "value": "PO-1042",
+        "start": 347,
+        "end": 354,
+        "confidence": 0.9999999998037261
+      },
+      "order_vendor": {
+        "value": "Paperbark Office Co",
+        "start": 363,
+        "end": 382,
+        "confidence": 0.9999999997189293
+      },
+      "order_currency": {
+        "value": "AUD",
+        "start": 393,
+        "end": 396,
+        "confidence": 0.9999999997170443
+      },
+      "order_total": {
+        "value": "1,320.00",
+        "start": 415,
+        "end": 423,
+        "confidence": 0.9999999995390223
+      },
+      "payment_terms": {
+        "value": "Net 14 days",
+        "start": 213,
+        "end": 224,
+        "confidence": 0.9999999993232147
+      }
+    },
+    "status": "READY_FOR_REVIEW",
+    "checks": [
+      {
+        "code": "document_type",
+        "ok": true,
+        "description": "Document is classified as an invoice.",
+        "fields": []
+      },
+      {
+        "code": "classification_confidence",
+        "ok": true,
+        "description": "Invoice classification confidence meets the 0.75 review threshold.",
+        "fields": []
+      },
+      {
+        "code": "required_facts",
+        "ok": true,
+        "description": "Required facts present.",
+        "fields": []
+      },
+      {
+        "code": "source_confidence",
+        "ok": true,
+        "description": "Critical source reads meet the 0.85 review threshold.",
+        "fields": []
+      },
+      {
+        "code": "po_reference",
+        "ok": true,
+        "description": "Invoice PO reference matches the supplied order.",
+        "fields": [
+          "purchase_order_id",
+          "order_id"
+        ]
+      },
+      {
+        "code": "supplier",
+        "ok": true,
+        "description": "Invoice supplier matches the order supplier.",
+        "fields": [
+          "vendor",
+          "order_vendor"
+        ]
+      },
+      {
+        "code": "currency",
+        "ok": true,
+        "description": "Both documents use the same supported currency (AUD, USD, EUR, GBP, NZD, CAD or SGD).",
+        "fields": [
+          "currency",
+          "order_currency"
+        ]
+      },
+      {
+        "code": "nonnegative_subtotal",
+        "ok": true,
+        "description": "Subtotal is nonnegative.",
+        "fields": [
+          "subtotal"
+        ]
+      },
+      {
+        "code": "nonnegative_tax",
+        "ok": true,
+        "description": "Tax is nonnegative.",
+        "fields": [
+          "tax"
+        ]
+      },
+      {
+        "code": "nonnegative_total",
+        "ok": true,
+        "description": "Total is nonnegative.",
+        "fields": [
+          "total"
+        ]
+      },
+      {
+        "code": "nonnegative_order_total",
+        "ok": true,
+        "description": "Order total is nonnegative.",
+        "fields": [
+          "order_total"
+        ]
+      },
+      {
+        "code": "arithmetic",
+        "ok": true,
+        "description": "Subtotal + tax equals invoice total (difference 0.00).",
+        "fields": [
+          "subtotal",
+          "tax",
+          "total"
+        ]
+      },
+      {
+        "code": "order_limit",
+        "ok": true,
+        "description": "Invoice is within the order's authorized total (remaining 0.00).",
+        "fields": [
+          "total",
+          "order_total"
+        ]
+      }
+    ],
+    "handoff": {
+      "review_team": "Accounts payable",
+      "review_note": "Missing or conflicting facts: none. A human must still compare the invoice and confirm fulfillment",
+      "note_source": "generated",
+      "payment_terms": {
+        "value": "Net 14 days",
+        "start": 213,
+        "end": 224,
+        "confidence": 0.9999999993232147
+      },
+      "note_scope": "purchase order"
+    },
+    "trace": [
+      {
+        "model": "clocked-1.0",
+        "request_id": "1803a0f7-a389-53bd-84da-9fbd7911172c",
+        "endpoint": "decide",
+        "round_trip_ms": 621,
+        "model_ms": "17.915968",
+        "credits": "1",
+        "cost_usd": "0.000199",
+        "cost_basis": "reference",
+        "transport": "door:east",
+        "local_replay": false
+      },
+      {
+        "model": "clocked-1.0",
+        "request_id": "d4931816-1f5e-576d-8575-9c4361e0c545",
+        "endpoint": "extract",
+        "round_trip_ms": 647,
+        "model_ms": "131.793304",
+        "credits": "6",
+        "cost_usd": "0.001195",
+        "cost_basis": "reference",
+        "transport": "door:east",
+        "local_replay": false
+      },
+      {
+        "model": "clocked-1.0",
+        "request_id": "3e581017-a06a-5e55-8a42-f098fd426954",
+        "endpoint": "fill",
+        "round_trip_ms": 725,
+        "model_ms": "286.054625",
+        "credits": "12",
+        "cost_usd": "0.002390",
+        "cost_basis": "reference",
+        "transport": "door:east",
+        "local_replay": false
+      }
+    ],
+    "limitations": "Review aid only. No payment action. No delivery, duplicate-invoice, tax-law, bank-detail or cumulative PO checks. Confidence thresholds are provisional and uncalibrated."
+  }
+}

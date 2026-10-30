@@ -178,6 +178,18 @@ class AdapterContractTests(unittest.TestCase):
     def test_three_endpoint_orchestration_and_journal_recovery(self):
         calls = []
         source, ranges = app.sources(BASE['invoice'], BASE['order'])
+        invoice_expected = {'vendor':'Paperbark Office Co','invoice_id':'INV-2026-184',
+                            'purchase_order_id':'PO-1042','currency':'AUD','subtotal':'1,200.00',
+                            'tax':'120.00','total':'1,320.00','due_date':'12 November 2026',
+                            'payment_terms':'Net 14 days'}
+        order_expected = {'order_id':'PO-1042','order_vendor':'Paperbark Office Co',
+                          'order_currency':'AUD','order_total':'1,320.00'}
+        poison_order = False
+
+        def fixture_fields(text, expected):
+            return {name: {**app.span(text, text.index(value), text.index(value)+len(value)), 'confidence':.99}
+                    for name, value in expected.items()}
+
         def transport(request, timeout):
             endpoint = request.full_url.rsplit('/',1)[-1]
             calls.append(endpoint)
@@ -185,17 +197,21 @@ class AdapterContractTests(unittest.TestCase):
             if endpoint == 'decide':
                 result = {'answers':{'document_type':{'choice':'invoice','confidence':.99}}}
             elif endpoint == 'extract':
-                self.assertEqual(payload['text'], source)
-                fields = app.offline_extract(source, ranges)
-                for field in fields.values():
-                    field['confidence'] = .99
-                result = {'fields':fields}
+                self.assertEqual(payload['text'], BASE['invoice'])
+                self.assertEqual(set(payload['fields']), set(invoice_expected))
+                result = {'fields':fixture_fields(payload['text'], invoice_expected)}
             else:
-                self.assertFalse(payload['fields']['payment_terms']['infer'])
-                start = source.index('Net 14 days')
-                result = {'fields':{'review_team':{'value':'Accounts payable'},
-                                    'review_note':{'value':'Review this invoice.','source':'generated'},
-                                    'payment_terms': app.span(source,start,start+11)}}
+                self.assertEqual(payload['text'], BASE['order'])
+                self.assertEqual(set(payload['fields']), set(order_expected) | {'review_team','review_note'})
+                for name in order_expected:
+                    self.assertFalse(payload['fields'][name]['infer'])
+                fields = fixture_fields(payload['text'], order_expected)
+                if poison_order:
+                    # Preserve the actual failure's invoice-owned global span;
+                    # never repair it by finding equal text in another document.
+                    fields['order_id'].update(start=102, end=109)
+                result = {'fields':{**fields, 'review_team':{'value':'Accounts payable'},
+                                    'review_note':{'value':'Review the order against the invoice.','source':'generated'}}}
             return Response(result)
         with tempfile.TemporaryDirectory() as directory:
             journal = app.Journal(directory)
@@ -204,12 +220,22 @@ class AdapterContractTests(unittest.TestCase):
             result = app.review(BASE['invoice'], BASE['order'], 'live', client, journal, run_id)
             self.assertEqual(result['status'], 'READY_FOR_REVIEW')
             self.assertEqual(calls, ['decide','extract','fill'])
+            for name, expected in (invoice_expected | order_expected).items():
+                field = result['fields'][name]
+                self.assertEqual(field['value'], expected)
+                low, high = ranges['order' if name in order_expected else 'invoice']
+                self.assertTrue(low <= field['start'] < field['end'] <= high)
+                self.assertEqual(source[field['start']:field['end']], expected)
+            self.assertEqual(result['handoff']['note_scope'], 'purchase order')
             replay = app.review(BASE['invoice'], BASE['order'], 'live', client, journal, run_id)
             self.assertEqual(len(calls), 3)
             self.assertTrue(all(stage['local_replay'] for stage in replay['trace']))
             self.assertNotIn('test-only-key', Path(directory,run_id+'.json').read_text())
             with self.assertRaisesRegex(app.ReviewError, 'different documents'):
                 app.review(BASE['invoice']+'\nChanged', BASE['order'], 'live', client, journal, run_id)
+            poison_order = True
+            with self.assertRaisesRegex(app.ReviewError, 'unsupported evidence for order_id'):
+                app.review(BASE['invoice'], BASE['order'], 'live', client)
 
 
 class LocalHTTPTests(unittest.TestCase):

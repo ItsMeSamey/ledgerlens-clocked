@@ -1,0 +1,49 @@
+{
+  "status": "PASS_ONE_SYNTHETIC_LIVE_WORKFLOW",
+  "run_id": "40de52e0-952c-4467-b009-a8d9906f86b2",
+  "admission_utc": "2026-10-30T10:45:09.305906+00:00",
+  "fixture": "matched fictional invoice and purchase order",
+  "http_requests": 3,
+  "endpoints": [
+    "decide",
+    "extract",
+    "fill"
+  ],
+  "models": [
+    "clocked-1.0"
+  ],
+  "expected_facts_exact": 12,
+  "expected_fact_count": 12,
+  "all_returned_fields_document_owned": true,
+  "invoice_payment_terms_exact": true,
+  "deterministic_checks_passed": 13,
+  "deterministic_checks_total": 13,
+  "application_status": "READY_FOR_REVIEW",
+  "handoff_scope": "purchase order",
+  "driver_elapsed_seconds": 2.252,
+  "trial_credits": 19,
+  "paid_charge_usd": 0,
+  "cost_basis": "reference",
+  "cumulative_requests": 5,
+  "cumulative_trial_credits": 28,
+  "prior_attempt": {
+    "status": "FAIL_CLOSED_WRONG_DOCUMENT_SPANS",
+    "http_requests": 2,
+    "trial_credits": 9,
+    "fill_called": false
+  },
+  "limits": "One author-written matched fixture only, not general accuracy, calibration, production benchmark or official judging. Prior failure retained. No public action.",
+  "source_pins": {
+    "launch.py": "12f6ebcb417f6b0c1d436727808b22df35eb9aaa2b7b9135b90f1624c05f7b01",
+    "live_validation.py": "5bcef560ed91cb4ab6a93c690b72819c5fbcf1a62ed377addf0396566fcc7c1e",
+    "app.py": "cc0a01ea6b16bea35809d10082f8edd31553e0e51843247f62d7d0d4a03c19c8",
+    "cases.json": "8e3a58ce05b9c47d4a75012d69fd073057897b8660f2ec987bb84f55fa00397d",
+    "python": "375532f83be620283ab780c14ca6bcc5907dc379d2b621de0c5d0a112cf5458b"
+  },
+  "evidence_hashes": {
+    "run_receipt": "e5bc178feeb180ebbd378b198b8bd4129f37394ded94160828340e516ba63a73",
+    "intent": "9a43adc9d6cbb12a9d6265308a658245e8ee8b4a0df8f52ba09610a49be4c4ba",
+    "field_comparison": "205e30e00f5af40b5cc2b013590393921a0070737edee5bd5e634e6535a427dc",
+    "audit": "6983422ef8e54968672585a26edf5310aea13d283e5342e13105dbe1980fafe3"
+  }
+}

@@ -3,6 +3,7 @@ const $ = id => document.getElementById(id);
 let lastResult = null;
 let currentRun = null;
 let examples = [];
+let policyVersion = 1;
 const labels = {vendor:'Invoice supplier',invoice_id:'Invoice number',purchase_order_id:'Invoice PO reference',currency:'Invoice currency',subtotal:'Subtotal',tax:'Tax',total:'Invoice total',due_date:'Due date',order_id:'Order number',order_vendor:'Order supplier',order_currency:'Order currency',order_total:'Authorized total'};
 labels.payment_terms = 'Invoice payment terms';
 function invalidate() {
@@ -63,7 +64,9 @@ function render(result) {
     button.addEventListener('click', () => highlight(name));
     return button;
   }));
-  $('note-kind').textContent = result.handoff.note_source === 'generated' ? 'AI-generated draft; verify every statement' : 'Deterministic demo template';
+  $('note-kind').textContent = result.handoff.note_source === 'generated'
+    ? 'AI-generated purchase-order draft; verify every statement'
+    : result.mode === 'live' ? 'Deterministic review policy' : 'Deterministic demo template';
   $('review-team').textContent = result.handoff.review_team;
   $('review-note').textContent = result.handoff.review_note;
   $('limits').textContent = result.limitations;
@@ -84,7 +87,7 @@ $('run').addEventListener('click', async () => {
   $('invoice').disabled = $('order').disabled = $('example').disabled = $('mode').disabled = true;
   $('run').textContent = 'Reviewing...';
   try {
-    const documentBytes = new TextEncoder().encode(JSON.stringify({invoice:$('invoice').value,order:$('order').value,mode:$('mode').value}));
+    const documentBytes = new TextEncoder().encode(JSON.stringify({invoice:$('invoice').value,order:$('order').value,mode:$('mode').value,policy_version:policyVersion}));
     const digest = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',documentBytes)), n=>n.toString(16).padStart(2,'0')).join('');
     let previous = null;
     try { previous = JSON.parse(sessionStorage.getItem('ledgerlens-run')); } catch (_) { /* Storage may be unavailable. */ }
@@ -113,6 +116,7 @@ $('export').addEventListener('click', () => {
   setTimeout(() => URL.revokeObjectURL(url),1000);
 });
 Promise.all([fetch('/api/config').then(r=>r.json()),fetch('/api/examples').then(r=>r.json())]).then(([config,cases]) => {
+  policyVersion = config.policy_version;
   examples = cases;
   for (const item of cases) {
     const option = document.createElement('option');

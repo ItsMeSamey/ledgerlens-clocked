@@ -17,3 +17,14 @@ This log is contemporaneous development evidence; it is not a replacement for re
 - Reverified official rules section 10 and current pricing: 4,000 free credits plus 16,000 from CLOCKEDHACKATHON, one redemption per account; trial never incurs paid overage or automatically converts. Actual signed-in entitlement remains unverified.
 - Sent the exact private account/key checklist to the sole browser controller. No browser actions, API calls or billing changes were made by the implementation owner.
 - Corrected the obsolete creative-browser queue in the scoped README, retained prior tests unchanged, and prepared a concrete local entry/source review package. Public URLs, genuine integration evidence, visual QA and final entrant declarations remain pending.
+
+## 2026-10-30
+
+- Actual free account/promo and protected key custody established by sole browser controller. First bounded capture expired; distinct existing-key capture succeeded with no regeneration and exact owned cleanup. No secret entered source/history.
+- First actual Decide/Extract run used nine free credits and failed closed: four PO values pointed to duplicate invoice text. Preserved original failure.
+- Separated invoice-only Extract and PO-only Fill; all twelve original facts retained, document-local validation before fixed-prefix rebasing and original ownership gate. Policy2 binds revised schema.
+- Independent source review and one allocated duplicate-value/ownership regression passed; historical23-test suite not rerun.
+- Revised actual three-endpoint run passed one fictional matched case:12/12 facts,13/13 checks,19 free credits,2.252s. Cumulative5 requests/28 free credits/$0 paid. No broad accuracy claim.
+- Retained nonsecret response/summary in evidence/. Prepared source-reviewed offline UI harness for1280/390 CSS-frame and highlight/export QA; actual visual/export results completed later that day. No public repository/deployment/demo upload/entry.
+
+- Recorded-result UI QA completed at1280/390px CSS iframe widths with no horizontal overflow, correct purchase-order highlight and clear draft/human-review boundaries. A new6953-byte browser export matched the entire retained audit. Native service finished after388.515s/10localHTTPrequests, no provider/credential access; exact owned terminal absence and StopUnit cleanup retained. Two private screenshots were viewed. Harness wording says twelve original facts while thirteen fields including terms render; this minor replay wording is recorded, not hidden.

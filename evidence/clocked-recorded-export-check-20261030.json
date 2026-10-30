@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "exact_export_matches_recorded_review": true,
+  "download_name": "ledgerlens-40de52e0-952c-4467-b009-a8d9906f86b2.json",
+  "bytes": 6953,
+  "sha256": "394e475e17d1f7ca6588bbbc8f9eeb129ba4aea2dfd3ab1428f0eb28245d93b2",
+  "run_id": "40de52e0-952c-4467-b009-a8d9906f86b2",
+  "expected_fact_count": 13,
+  "provider_requests": 0,
+  "comparison": "Whole JSON value equality, including original trace, facts, source and documented recorded-display metadata."
+}

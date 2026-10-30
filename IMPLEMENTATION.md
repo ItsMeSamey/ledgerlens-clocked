@@ -15,16 +15,16 @@ Open http://127.0.0.1:8765. The default is visibly labelled **OFFLINE TEMPLATE D
 ## What is implemented
 
 1. Clocked Decide classifies the submitted document as invoice, quote, credit note or not established. Quotes, credits and uncertain classifications remain on hold.
-2. Clocked Extract reads twelve invoice/order facts verbatim. Every non-null fact must have exact Unicode character offsets within the correct document. Missing, inferred, generated, wrong-document and offset-mismatched facts cannot become accepted evidence.
-3. Deterministic application checks reconcile supplier and PO references, explicit currency, source-read confidence, nonnegative amounts, subtotal plus tax, and the invoice total against the order's authorized total. Decimal arithmetic never uses floats; amounts with more than twelve integer digits or ambiguous notation are rejected. Supported currencies are AUD, USD, EUR, GBP, NZD, CAD and SGD.
-4. Clocked Fill extracts invoice payment terms with `infer: false`, routes the review to one of three teams and produces a clearly labelled draft handoff. The generated handoff cannot change any arithmetic check or the application status. Payment terms must come from the invoice range.
+2. Clocked Extract receives only the invoice, reading eight original facts and invoice payment terms. Every non-null read must exactly match document-local Unicode offsets.
+3. Clocked Fill receives only the purchase order, reading four facts with `infer: false`, suggesting a reviewer team and drafting a clearly labelled purchase-order note. It never claims to have reconciled an unseen invoice. Reads are validated locally, then shifted by the known document prefix into the combined source; the original ownership validator checks the merged twelve-fact record again.
+4. Deterministic checks reconcile supplier and PO references, explicit currency, source confidence, nonnegative amounts, subtotal plus tax and the order limit. Decimal arithmetic never uses floats; amounts above twelve integer digits and ambiguous notation are rejected. Supported currencies are AUD, USD, EUR, GBP, NZD, CAD and SGD. Generated notes cannot change these checks or authorize payment.
 5. The UI shows checks, source-linked facts, the original unmodified source, generated-versus-template notes, model/request/timing/credit trace, and an exportable JSON audit record.
 
 `READY_FOR_REVIEW` means only that the implemented checks are consistent. It never means approved for payment. `HOLD` means a person needs to resolve missing, uncertain or conflicting information.
 
-## Real API mode: implemented, not live-verified
+## Real API mode: one synthetic workflow verified
 
-No Clocked credentials were available during development. **No real API request was sent.** The transport was checked against official public docs and exercised with scripted contract fixtures, which are unit tests, not live integration evidence.
+Initial development used no credentials. On October 30, actual free account access and protected key custody were established. The first two-request run failed closed because Extract anchored all four PO values to duplicate invoice text. After separating the documents at request boundaries, one actual three-endpoint run passed all twelve expected facts and strict source ownership. Total usage across both attempts: five requests, twenty-eight trial credits, zero paid charge. The original failure is preserved. See `evidence/clocked-live-summary-20261030.json`; this single author-written fixture does not establish general accuracy or calibrated thresholds.
 
 To enable live mode later, provide `CLOCKED_API_KEY` to the backend environment, independently confirm that sufficient free credits remain, set `CLOCKED_FREE_CREDITS_CONFIRMED=1`, and run:
 
@@ -34,7 +34,7 @@ python app.py --live
 
 The extra environment flag is an operator assertion, not an account balance check or a spending cap. The program cannot verify whether a request consumes free or paid credits. Leave live mode disabled until the account's free-credit balance has been confirmed. Each live review normally requests Decide, Extract and Fill; retries may repeat an existing idempotent attempt. The API key never goes to the browser.
 
-Do not claim this implementation is submission-ready until a funded-free live run has been inspected. Check the actual response shapes, evidence placement, latency and per-request credit headers; collect a representative invoice evaluation set and calibrate the provisional 0.75 classification / 0.85 source-confidence thresholds. The included public examples are fictional.
+The actual response shapes, evidence placement, model identifiers and credit headers were inspected for this one fixture. A reviewed video/public demo and representative invoice validation remain outstanding. The 0.75 classification / 0.85 source-confidence thresholds remain provisional and uncalibrated. All included examples are fictional. No further provider requests are implied by the completed proof.
 
 ## Recovering interrupted runs
 
@@ -52,9 +52,11 @@ node --check static/app.js
 
 `tests/test_app.py` covers source ownership, Unicode/CRLF offsets, null facts, invented/generated evidence, malformed confidence, unsupported monetary formats and precision bounds, all template scenarios, same-key retries, retry budgets, authentication/credit/conflict errors, stage recovery, journal binding, actual local HTTP routes and concurrent review rejection.
 
+The original 23-test pass is historical. After the document-separation change, one allocated regression passed: separate invoice/order payloads, all duplicated values with correct rebased ownership, journal replay and rejection of the original bad span. The full suite was not repeated. Policy version2 binds both journals and browser session digests to the revised schema.
+
 `fixtures/cases.json` contains 20 author-written synthetic cases. It is neither independent nor held-out. Nineteen use the offline template; one deliberately uses a natural-language invoice that the offline parser cannot read. The latter is scored against the desired application result and therefore honestly reduces the aggregate score. `evaluation/offline-report.json` records 19/20 correct statuses, zero unsafe-ready results, 20/28 labelled field matches and 100% exact precision among non-null labelled reads. These figures describe only the offline parser and policy, not Clocked quality. The CLI evaluator has no bulk live-call switch.
 
-No visual browser validation was performed because the connected browser was unavailable. Static JavaScript syntax and local HTTP serving were verified; the CSS includes a mobile breakpoint and reduced-motion handling.
+On October30, the actual retained successful result was rendered offline through the unchanged application UI.1280px and390px CSS iframe viewports showed no horizontal overflow; the PO highlight belonged to the purchase order. Human-review and PO-only-draft labels were understandable in two viewed screenshots. One genuine new browser JSON download matched the full retained review plus explicit recorded-display metadata. The owned local service finished and was cleaned up; zero provider requests or credential reads occurred. This is not physical mobile-device or full accessibility testing. See evidence/clocked-offline-ui-summary-20261030.json.
 
 ## Limits
 

@@ -1,0 +1,206 @@
+{
+  "status": "LIVE_CONTRACT_FAILURE_CORRECTLY_BLOCKED",
+  "actual_requests": 2,
+  "actual_http_200": 2,
+  "actual_model": "clocked-1.0",
+  "actual_free_credits": 9,
+  "cost_basis": "reference",
+  "paid_charge_usd": 0,
+  "driver_elapsed_seconds": 1.741,
+  "terminal_exit": 1,
+  "admission_utc": "2026-10-30T10:26:33.394901+00:00",
+  "literal_value_matches": 12,
+  "source_text_matches": 12,
+  "correct_document_spans": 8,
+  "field_count": 12,
+  "fill_called": false,
+  "application_error": "Rejected unsupported evidence for order_id; source and offsets must match its document.",
+  "diagnostic_method": "Read-only retained-response comparison against original fictional fixture; no rerun/model call. Fixture spans diagnose only, never substituted into provider evidence.",
+  "fields": [
+    {
+      "field": "vendor",
+      "expected_document": "invoice",
+      "value_exact": true,
+      "span_text_exact": true,
+      "document_ownership_correct": true,
+      "actual_span": [
+        39,
+        58
+      ],
+      "fixture_span": [
+        39,
+        58
+      ]
+    },
+    {
+      "field": "invoice_id",
+      "expected_document": "invoice",
+      "value_exact": true,
+      "span_text_exact": true,
+      "document_ownership_correct": true,
+      "actual_span": [
+        75,
+        87
+      ],
+      "fixture_span": [
+        75,
+        87
+      ]
+    },
+    {
+      "field": "purchase_order_id",
+      "expected_document": "invoice",
+      "value_exact": true,
+      "span_text_exact": true,
+      "document_ownership_correct": true,
+      "actual_span": [
+        102,
+        109
+      ],
+      "fixture_span": [
+        102,
+        109
+      ]
+    },
+    {
+      "field": "currency",
+      "expected_document": "invoice",
+      "value_exact": true,
+      "span_text_exact": true,
+      "document_ownership_correct": true,
+      "actual_span": [
+        120,
+        123
+      ],
+      "fixture_span": [
+        120,
+        123
+      ]
+    },
+    {
+      "field": "subtotal",
+      "expected_document": "invoice",
+      "value_exact": true,
+      "span_text_exact": true,
+      "document_ownership_correct": true,
+      "actual_span": [
+        134,
+        142
+      ],
+      "fixture_span": [
+        134,
+        142
+      ]
+    },
+    {
+      "field": "tax",
+      "expected_document": "invoice",
+      "value_exact": true,
+      "span_text_exact": true,
+      "document_ownership_correct": true,
+      "actual_span": [
+        148,
+        154
+      ],
+      "fixture_span": [
+        148,
+        154
+      ]
+    },
+    {
+      "field": "total",
+      "expected_document": "invoice",
+      "value_exact": true,
+      "span_text_exact": true,
+      "document_ownership_correct": true,
+      "actual_span": [
+        162,
+        170
+      ],
+      "fixture_span": [
+        162,
+        170
+      ]
+    },
+    {
+      "field": "due_date",
+      "expected_document": "invoice",
+      "value_exact": true,
+      "span_text_exact": true,
+      "document_ownership_correct": true,
+      "actual_span": [
+        181,
+        197
+      ],
+      "fixture_span": [
+        181,
+        197
+      ]
+    },
+    {
+      "field": "order_id",
+      "expected_document": "order",
+      "value_exact": true,
+      "span_text_exact": true,
+      "document_ownership_correct": false,
+      "actual_span": [
+        102,
+        109
+      ],
+      "fixture_span": [
+        347,
+        354
+      ]
+    },
+    {
+      "field": "order_vendor",
+      "expected_document": "order",
+      "value_exact": true,
+      "span_text_exact": true,
+      "document_ownership_correct": false,
+      "actual_span": [
+        39,
+        58
+      ],
+      "fixture_span": [
+        363,
+        382
+      ]
+    },
+    {
+      "field": "order_currency",
+      "expected_document": "order",
+      "value_exact": true,
+      "span_text_exact": true,
+      "document_ownership_correct": false,
+      "actual_span": [
+        120,
+        123
+      ],
+      "fixture_span": [
+        393,
+        396
+      ]
+    },
+    {
+      "field": "order_total",
+      "expected_document": "order",
+      "value_exact": true,
+      "span_text_exact": true,
+      "document_ownership_correct": false,
+      "actual_span": [
+        162,
+        170
+      ],
+      "fixture_span": [
+        415,
+        423
+      ]
+    }
+  ],
+  "evidence_hashes": {
+    "private_receipt": "9309cfeb0d5a2971d4b29d86f7702a5b6cc2e500e5f9b6afca12d796fa61a54e",
+    "private_intent": "1747a8fa7b4d91f5a5cf826d1eddcb48659a298b605bbe459dfbebaa5837a1d8",
+    "journal": "7d7d954b94cb358e81e6218d071a9d0101b4e72de7e5aabca4e626d67d7c151b"
+  }
+}

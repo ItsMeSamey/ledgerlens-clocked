@@ -1,0 +1,58 @@
+{
+  "status": "PASS_RECORDED_DESKTOP_NARROW_HIGHLIGHT_EXPORT",
+  "observed_finish_utc": "2026-10-30T11:15:12.465Z",
+  "recorded_result_only": true,
+  "new_provider_requests": 0,
+  "credential_reads": 0,
+  "desktop": {
+    "innerWidth": 1280,
+    "scrollWidth": 1265,
+    "horizontal_overflow": false
+  },
+  "narrow": {
+    "innerWidth": 390,
+    "scrollWidth": 375,
+    "horizontal_overflow": false,
+    "meaning": "same-origin CSS iframe viewport, not physical mobile/device emulation"
+  },
+  "visible_result": {
+    "checks": "13/13",
+    "facts": 13,
+    "human_review": "Checks consistent - human review next",
+    "draft": "AI-generated purchase-order draft; verify every statement",
+    "reminder": "A human must still compare the invoice and confirm fulfillment"
+  },
+  "highlight": {
+    "field": "order_id",
+    "mark": "PO-1042",
+    "owner": "PURCHASE ORDER SOURCE / PO number"
+  },
+  "ux_assessment": "Captured review layouts are readable and not horizontally clipped. Recorded provenance, human review and draft limitations are understandable without code. Full-page/accessibility/device testing was not performed. Harness status says twelve source facts although rendered output contains thirteen; this is replay-status wording, not a changed live result.",
+  "export": {
+    "status": "PASS",
+    "exact_export_matches_recorded_review": true,
+    "download_name": "ledgerlens-40de52e0-952c-4467-b009-a8d9906f86b2.json",
+    "bytes": 6953,
+    "sha256": "394e475e17d1f7ca6588bbbc8f9eeb129ba4aea2dfd3ab1428f0eb28245d93b2",
+    "run_id": "40de52e0-952c-4467-b009-a8d9906f86b2",
+    "expected_fact_count": 13,
+    "provider_requests": 0,
+    "comparison": "Whole JSON value equality, including original trace, facts, source and documented recorded-display metadata."
+  },
+  "cleanup": {
+    "status": "FINISHED",
+    "elapsed_seconds": 388.515,
+    "local_http_requests": 10,
+    "listener_closed": true,
+    "owned_terminal_process_absence_before_stop": true,
+    "stop_returncode": 0,
+    "post_stop_inactive_dead_pid_zero": true,
+    "original_process_absent": true,
+    "controller_post_stop_exit": 2,
+    "exit_explanation": "Unit unloaded after owned StopUnit; exact owned process absence had already been retained."
+  },
+  "source_pins_unchanged_at_cleanup": true,
+  "browser_receipt_sha256": "4dbd4d76db3baebeced2f7cd5922b60d4caa8023e12ab9164de65685dbe4d1e8",
+  "cleanup_receipt_sha256": "a6c2e2119824a803027a2d780ec171e61cdb0f908f19f39e2ce86fa36af58335",
+  "limits": "Recorded fictional result only.390px CSS iframe is not a physical mobile device. Two captured layouts, no full-page/accessibility or new model accuracy test."
+}

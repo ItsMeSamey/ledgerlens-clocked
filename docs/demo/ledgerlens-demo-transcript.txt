@@ -1,0 +1,20 @@
+LedgerLens — edited recorded-result demonstration
+Duration: 90 seconds. Silent, captioned. Genuine UI stills; not continuous browser footage. No new API call.
+
+00:00–00:10
+LedgerLens helps an accounts-payable reviewer compare an invoice with its purchase order. This edited walkthrough uses genuine UI stills and a saved fictional result.
+
+00:10–00:28
+Decide classifies the invoice. Extract reads invoice facts and payment terms. Fill reads the purchase order and drafts a labelled note. The saved case passed all thirteen implemented checks.
+
+00:28–00:46
+Every non-null fact must match its exact source span inside the correct document. Our first run failed this rule: the right purchase-order values pointed to duplicate invoice text. It stopped before Fill.
+
+00:46–01:02
+The revised workflow reads the documents separately. A generated purchase-order note cannot change the arithmetic checks. Its wording still needs verification, and a person must compare the invoice and confirm fulfillment.
+
+01:02–01:16
+The audit retains source text, facts, checks and the original request trace. A genuine browser download matched the complete saved review. Replaying it makes no new Clocked request.
+
+01:16–01:30
+Across both real attempts: five requests, twenty-eight free credits, zero paid charge. One fictional case is verified, not general accuracy. LedgerLens never approves or sends a payment.

@@ -12,11 +12,19 @@ python app.py
 
 Open http://127.0.0.1:8765. The default is visibly labelled **OFFLINE TEMPLATE DEMO**. Choose a fictional example, run the review, select any fact to highlight its exact original source, then export the audit JSON. The server listens only on loopback. There is no payment action, signup, submission, deployment or messaging integration.
 
+## Open the actual saved result without a key
+
+```sh
+python recorded_demo.py
+```
+
+Open http://127.0.0.1:8766/recorded/ and select **Load saved review**. This separate loopback viewer loads the actual retained fictional response through the original application renderer. It reads no API key, creates no provider client and rejects every review POST. Its recorded banner is explicit; only display provenance is added to the exported audit. The normal live application behavior is unchanged. Stop with Ctrl+C. The portable viewer was subsequently exercised in the original browser: the introduction, loaded review, correct PO highlight and human-review draft were captured as four genuine stills. No new model request or export was made. See evidence/recorded-viewer-capture-20261030.json.
+
 ## What is implemented
 
 1. Clocked Decide classifies the submitted document as invoice, quote, credit note or not established. Quotes, credits and uncertain classifications remain on hold.
 2. Clocked Extract receives only the invoice, reading eight original facts and invoice payment terms. Every non-null read must exactly match document-local Unicode offsets.
-3. Clocked Fill receives only the purchase order, reading four facts with `infer: false`, suggesting a reviewer team and drafting a clearly labelled purchase-order note. It never claims to have reconciled an unseen invoice. Reads are validated locally, then shifted by the known document prefix into the combined source; the original ownership validator checks the merged twelve-fact record again.
+3. Clocked Fill receives only the purchase order, reading four facts with `infer: false`, suggesting a reviewer team and drafting a clearly labelled purchase-order note. Its prompt and UI label restrict the draft to the purchase order; a person must still verify that the generated prose does not claim unsupported reconciliation. Reads are validated locally, then shifted by the known document prefix into the combined source; the original ownership validator checks the merged twelve-fact record again.
 4. Deterministic checks reconcile supplier and PO references, explicit currency, source confidence, nonnegative amounts, subtotal plus tax and the order limit. Decimal arithmetic never uses floats; amounts above twelve integer digits and ambiguous notation are rejected. Supported currencies are AUD, USD, EUR, GBP, NZD, CAD and SGD. Generated notes cannot change these checks or authorize payment.
 5. The UI shows checks, source-linked facts, the original unmodified source, generated-versus-template notes, model/request/timing/credit trace, and an exportable JSON audit record.
 
@@ -34,7 +42,7 @@ python app.py --live
 
 The extra environment flag is an operator assertion, not an account balance check or a spending cap. The program cannot verify whether a request consumes free or paid credits. Leave live mode disabled until the account's free-credit balance has been confirmed. Each live review normally requests Decide, Extract and Fill; retries may repeat an existing idempotent attempt. The API key never goes to the browser.
 
-The actual response shapes, evidence placement, model identifiers and credit headers were inspected for this one fixture. A reviewed video/public demo and representative invoice validation remain outstanding. The 0.75 classification / 0.85 source-confidence thresholds remain provisional and uncalibrated. All included examples are fictional. No further provider requests are implied by the completed proof.
+The actual response shapes, evidence placement, model identifiers and credit headers were inspected for this one fixture. The private 90-second silent edited video uses genuine saved-result UI captures and factual captions; six decoded representative frames were independently inspected. It is not continuous browser capture or a new live provider journey. Public hosting and representative invoice validation remain outstanding. The 0.75 classification / 0.85 source-confidence thresholds remain provisional and uncalibrated. All included examples are fictional. No further provider requests are implied by the completed proof.
 
 ## Recovering interrupted runs
 

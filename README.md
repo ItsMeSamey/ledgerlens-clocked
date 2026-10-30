@@ -14,11 +14,23 @@ Open http://127.0.0.1:8765. Choose a fictional example, review the checks, selec
 
 The real backend uses Clocked Decide, Extract and Fill. One fictional three-endpoint workflow was verified on October 30, 2026. Read [IMPLEMENTATION.md](IMPLEMENTATION.md) before enabling live mode; use your own account/key and independently confirm free credits. Never place keys in the repository.
 
+## Open the saved live example without a key
+
+```sh
+python recorded_demo.py
+```
+
+Open http://127.0.0.1:8766/recorded/ and choose **Load saved review**. This separate loopback viewer uses the original renderer and retained fictional Clocked result. It reads no API key, creates no provider client and rejects all new review POSTs. Its banner and exported display metadata identify the response as recorded. The ordinary application above remains unchanged. Stop the viewer with Ctrl+C.
+
+## Watch the recorded demonstration
+
+[Open the static demo page](docs/demo/index.html) or play [the MP4](docs/demo/ledgerlens-edited-demo.mp4). It is a silent 90-second edited walkthrough of four genuine saved-result UI captures plus factual captions, not continuous browser footage or a new API run. Captions and a transcript accompany it. Owner and independent critic inspected six representative decoded frames. The no-key viewer above lets you inspect the actual saved review yourself. See [video provenance](evidence/edited-demo-provenance-20261030.json).
+
 ## What the application does
 
 - Decide classifies the invoice; uncertain or unsupported documents remain on hold.
 - Extract reads eight invoice facts and payment terms from the invoice alone.
-- Fill reads four purchase-order facts with inference disabled and drafts a clearly labelled purchase-order review note. The draft does not claim to reconcile an invoice it has not read.
+- Fill reads four purchase-order facts with inference disabled and drafts a clearly labelled purchase-order review note. The prompt and label restrict the draft to the purchase order; its generated wording still requires human verification.
 - Document-local Unicode spans are validated before fixed-prefix rebasing. A second ownership gate checks all twelve original facts against the combined source.
 - Explicit checks compare supplier, PO reference, currency, subtotal/tax/total and order limit using bounded Decimal amounts.
 - Facts link to original evidence; the JSON export retains checks, source, model usage and request identifiers.
@@ -41,7 +53,7 @@ node --check static/app.js
 
 ## Provenance and limits
 
-AI-assisted implementation created specifically for this challenge; no earlier application code was reused. All included documents are fictional. Python standard library and browser platform APIs are used; no vendored application code, external assets or runtime dependencies. Confidence thresholds are provisional and uncalibrated. The stdlib server is for local development/demo use.
+AI-assisted implementation created specifically for this challenge; no earlier application code was reused. All included documents are fictional. Python standard library and browser platform APIs are used; no vendored application code or third-party application runtime dependencies. The separate edited video was encoded with FFmpeg/libx264 and rendered DejaVu Sans/Mono text; tool and font binaries are not bundled. Confidence thresholds are provisional and uncalibrated. The stdlib server is for local development/demo use.
 
 [DEVELOPMENT_LOG.md](DEVELOPMENT_LOG.md) records actual work and limitations. The first local Git checkpoint was made on October 29; earlier work was not recorded in Git and history is not backdated. No public repository, demo upload or contest submission is implied by this private package.
 

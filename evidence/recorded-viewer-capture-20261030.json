@@ -1,0 +1,32 @@
+{
+  "status": "PORTABLE_RECORDED_VIEWER_OBSERVED",
+  "captured_utc": "2026-10-30T11:51:24.223747+00:00",
+  "viewer_command": "python recorded_demo.py",
+  "observed_states": [
+    "saved-example introduction",
+    "recorded review with13/13 checks",
+    "purchase-order source highlight",
+    "generated purchase-order draft and human invoice/fulfillment reminder"
+  ],
+  "source_facts": "Twelve original fields plus invoice payment terms; original renderer and retained result unchanged.",
+  "new_provider_calls": 0,
+  "new_exports": 0,
+  "actual_stills": 4,
+  "stills_sha256": [
+    "317a9e1ba6b80d7ab20cd4f742cd56ae3aee03f07799b4a241cbb1a4a9a4ec72",
+    "5aa69631b679b90ccddf33cd4bb979230bf148a1f710bb3b3a0e9ff2236e98a5",
+    "778a8dba7487ea5dd87dd07c0ef66227818b1e8bda3873fb4b7fabdecabbfc61",
+    "fd22b0bb0dc190eeccc9823ad53c191d69d01273a3d088f3fd76c40fc187e12d"
+  ],
+  "private_originals_not_published": true,
+  "mandatory_app_only_crop_xywh": [
+    203,
+    97,
+    1701,
+    974
+  ],
+  "capture_receipt_sha256": "473816aed8f80ca7a482586481fcfcba83a40bf9226bac170adfc0759ea8384e",
+  "cleanup_receipt_sha256": "d40f155ddcb1273bbe27b8d7f6043974e0fe02aa5538fa904d1ec9f9164f82b1",
+  "capture_cleanup": "Private bounded capture helper required SIGKILL after its10s stop timeout; same owned invocation/PID0/process-group absence verified. No final helper counters or graceful-Finish claim.",
+  "limits": "Actual recorded-result viewer observation, not new model accuracy, physical-device/accessibility coverage or continuous video capture. Four stills are inputs to a separately bounded edited demonstration."
+}

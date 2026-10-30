@@ -1,0 +1,51 @@
+{
+  "kind": "edited_demo_provenance",
+  "created_utc": "2026-10-30T12:18:00.390725+00:00",
+  "video_sha256": "944f90183244484a08a4e505bcdaa851412f51084f117256399a3ac7a8fe6978",
+  "video_bytes": 2080515,
+  "duration_seconds": 90,
+  "frames": 450,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "silent": true,
+  "continuous_browser_capture": false,
+  "new_provider_requests": 0,
+  "method": "Four genuine original-browser UI captures, cropped to app content, plus two factual evidence panels and captions.",
+  "capture_evidence": "recorded-viewer-capture-20261030.json",
+  "visual_review": {
+    "representative_seconds": [
+      5,
+      19,
+      37,
+      54,
+      69,
+      83
+    ],
+    "owner_and_independent_critic_viewed_all_six": true,
+    "complete_po_mark_visible": true,
+    "private_chrome_excluded": true,
+    "claim_limit": "Representative frame inspection and retained media probe, not full90s playback."
+  },
+  "original_failures_preserved": [
+    "unsupported FFmpeg script option; no video",
+    "RAM admission HOLD; no child",
+    "x264 allocation failure under512MiB address-space ceiling; cleaned up"
+  ],
+  "successful_encode": {
+    "elapsed_seconds": 14.372,
+    "children": 14,
+    "all_leaders_reaped": true,
+    "all_groups_absent": true
+  },
+  "credits": {
+    "provider_requests_cumulative": 5,
+    "trial_credits": 28,
+    "paid_usd": 0
+  },
+  "tool_credits": [
+    "FFmpeg/libx264 used to encode the edited video; no tool binaries bundled.",
+    "DejaVu Sans and DejaVu Sans Mono rendered text; no font binaries bundled."
+  ]
+}

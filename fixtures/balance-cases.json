@@ -1,0 +1,20 @@
+[
+  {
+    "id": "po_balance_over", "name": "Fictional PO: 600 prior + 600 current exceeds 1,000",
+    "invoice": "INVOICE\nVendor: Paperbark Office Co\nInvoice number: INV-CURRENT\nPO reference: PO-BALANCE\nCurrency: AUD\nSubtotal: 600.00\nTax: 0.00\nTotal: 600.00\nDue date: 12 November 2026\nPayment terms: Net 14 days",
+    "order": "PURCHASE ORDER\nPO number: PO-BALANCE\nVendor: Paperbark Office Co\nCurrency: AUD\nAuthorized total: 1,000.00",
+    "ledger": {"vendor": "Paperbark Office Co", "po_id": "PO-BALANCE", "currency": "AUD", "complete": true, "as_of": "2026-10-31", "context": "Fictional demonstration only: all prior and pending commitments, including tax, through this date. No real account data.", "rows": [{"invoice_id": "INV-PRIOR", "vendor": "Paperbark Office Co", "po_id": "PO-BALANCE", "currency": "AUD", "amount": "600.00", "kind": "invoice", "status": "committed"}]}
+  },
+  {
+    "id": "po_balance_unused", "name": "Fictional PO: explicit zero history, 600 fits 1,000",
+    "invoice": "INVOICE\nVendor: Paperbark Office Co\nInvoice number: INV-CURRENT\nPO reference: PO-BALANCE\nCurrency: AUD\nSubtotal: 600.00\nTax: 0.00\nTotal: 600.00\nDue date: 12 November 2026\nPayment terms: Net 14 days",
+    "order": "PURCHASE ORDER\nPO number: PO-BALANCE\nVendor: Paperbark Office Co\nCurrency: AUD\nAuthorized total: 1,000.00",
+    "ledger": {"vendor": "Paperbark Office Co", "po_id": "PO-BALANCE", "currency": "AUD", "complete": true, "as_of": "2026-10-31", "context": "Fictional demonstration only: verified zero prior or pending commitments through this date. No real account data.", "rows": []}
+  },
+  {
+    "id": "po_balance_boundary", "name": "Fictional PO: 600 prior + 400 current reaches 1,000",
+    "invoice": "INVOICE\nVendor: Paperbark Office Co\nInvoice number: INV-CURRENT\nPO reference: PO-BALANCE\nCurrency: AUD\nSubtotal: 400.00\nTax: 0.00\nTotal: 400.00\nDue date: 12 November 2026\nPayment terms: Net 14 days",
+    "order": "PURCHASE ORDER\nPO number: PO-BALANCE\nVendor: Paperbark Office Co\nCurrency: AUD\nAuthorized total: 1,000.00",
+    "ledger": {"vendor": "Paperbark Office Co", "po_id": "PO-BALANCE", "currency": "AUD", "complete": true, "as_of": "2026-10-31", "context": "Fictional demonstration only: all prior and pending commitments, including tax, through this date. No real account data.", "rows": [{"invoice_id": "INV-PRIOR", "vendor": "Paperbark Office Co", "po_id": "PO-BALANCE", "currency": "AUD", "amount": "600.00", "kind": "invoice", "status": "committed"}]}
+  }
+]

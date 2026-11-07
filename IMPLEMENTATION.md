@@ -68,7 +68,7 @@ On October30, the actual retained successful result was rendered offline through
 
 ## Limits
 
-Text only; no OCR/PDF upload, line-item matching, tax-law interpretation, delivery verification, duplicate-invoice detection, cumulative order spend, exchange-rate conversion or bank-detail verification. Supported monetary notation is `1,234.56` or `1234.56`; other locale conventions stay on hold. Supplier matching ignores case and repeated whitespace but does not resolve aliases or legal entities. Author-written fixtures cannot establish production reliability. The local stdlib server is a development/demo server, not a hosted production deployment.
+Text only; no OCR/PDF upload, line-item matching, tax-law interpretation, delivery verification, cross-system duplicate-invoice detection, independently verified ledger completeness, exchange-rate conversion or bank-detail verification. Supported monetary notation is `1,234.56` or `1234.56`; other locale conventions stay on hold. Supplier matching ignores case and repeated whitespace but does not resolve aliases or legal entities. Author-written fixtures cannot establish production reliability. The local stdlib server is a development/demo server, not a hosted production deployment.
 
 ## Official contract sources
 
@@ -82,3 +82,11 @@ Public documentation inspected 28 October 2026:
 - https://clocked.rezolve.ai/docs/errors
 
 The adapter uses direct HTTP JSON responses (no SDK `data` wrapper), HTTPS bearer authentication, required UUID `Idempotency-Key` headers, and Unicode code-point spans with exclusive ends. Browser evidence slicing uses `Array.from`, not UTF-16 `String.slice` offsets.
+
+## November 1–2: explicit cumulative PO ledger
+
+`po_balance.py` uses Decimal arithmetic over a caller-supplied ledger with explicit supplier, PO, currency, as-of date, source/cutoff and completeness assertion. The reviewed current invoice is counted once; a matching ledger row is excluded only when its ID and amount agree. Duplicate identifiers, current-invoice amount conflicts, mixed scope, credits/reversals and unsupported statuses keep the balance unknown/review-required. This is a narrow local commitment check, not reconciliation with an accounting system or evidence that a human completeness assertion is true.
+
+The compact editor presents supported single-scope committed-invoice rows. Advanced JSON is canonical and preserves unsupported imports without coercion. All ledger edits stale the displayed decision and hide export. `/api/balance` recalculates from the retained source-owned facts without a provider call or new run ID. The outbound request omits the old unused balance to avoid duplicating its ledger/audit payload. Amounts include tax; no FX conversion occurs. See `PO_BALANCE.md`.
+
+The backend's ten focused cases and the editor's ten model groups/five cross-language balance cases passed. No historical broad suite or provider run was repeated. Actual background-browser table editing, stale-export hiding, zero-allowance recalculation and incomplete-history handling passed. The download acknowledgement timed out. Exact export data was later retained through read-only page inspection and checked for source ownership, document fingerprint, run identity, checks and balance parity. Successful browser download and new-layout verification remain pending. Historical recorded-viewer evidence is separate.

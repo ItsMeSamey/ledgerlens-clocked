@@ -1,0 +1,105 @@
+{
+  "date": "2026-11-02",
+  "status": "private_candidate_functional_and_export_data_pass_download_unproven",
+  "data": "Author-written fictional documents and explicit local ledger; no customer data.",
+  "focused_checks": {
+    "backend_cases_passed": 10,
+    "editor_model_groups_passed": 10,
+    "model_to_python_balance_cases_passed": 5,
+    "changed_script_syntax_checks_passed": 2,
+    "broad_suite_repeated": false,
+    "affected_http_case_passed": 1
+  },
+  "browser_checks": {
+    "mode": "offline_template",
+    "initial": {
+      "prior": "600.00",
+      "current": "600.00",
+      "po": "1000.00",
+      "currency": "AUD",
+      "status": "HOLD",
+      "remaining": "-200.00"
+    },
+    "table_edit": {
+      "prior": "400.00",
+      "old_result_marked_stale": true,
+      "export_unavailable_before_recalculation": true
+    },
+    "recalculated": {
+      "balance_status": "WITHIN_BALANCE",
+      "remaining": "0.00",
+      "contributing_invoice": "INV-PRIOR"
+    },
+    "completeness_unchecked": {
+      "balance_status": "REVIEW_REQUIRED",
+      "remaining": null
+    },
+    "completeness_restored": {
+      "checks_passed": 12,
+      "checks_total": 12,
+      "remaining": "0.00"
+    },
+    "run_id": "b1972de4-8d59-4695-b75b-e089f5374805",
+    "download_file_verified": false,
+    "same_run_id_observed_in_initial_edited_and_restored_ready": true
+  },
+  "limitations": [
+    "Actual export-button acknowledgement timed out; browser download completion remains unproven. Exact full export JSON was subsequently retained through permitted read-only page inspection and content-verified separately.",
+    "No new viewport/layout screenshots or physical-device/accessibility test.",
+    "Missing/duplicate identifiers, mixed currencies and credits were covered by focused source/model/backend checks, not repeated in this browser window.",
+    "Historical recorded viewer controls were source-reviewed and its changed script syntax checked; no new actual viewer interaction in this window.",
+    "Human ledger completeness is asserted, not independently verified; no accounting-system integration, credits/reversals or FX conversion.",
+    "Historical October30 video and provider success do not demonstrate cumulative PO checking."
+  ],
+  "new_provider_calls": 0,
+  "source_pins": {
+    "app.py": "69040fa45be01a011bfd9d0bbf8fb8c3dd7af018c323ac93a749b6ba70dc664c",
+    "po_balance.py": "b93bab51519afedb4b4e519841b7be373641470df6c2537b05775b8f5c81efed",
+    "recorded_demo.py": "f490a4620521e8b0fce044bc57710a1717a30ed729529573286e7f0550c1437d",
+    "static/app.js": "12cc821e216da3ac63f1d000e8946a4069c409d5b0502f79660a79546ff48cff",
+    "static/index.html": "4156183cae7522b53aa7bfec91773a5c38e043e38726e78d8096c6a991539a44",
+    "static/style.css": "c7198a63acafc03d8f146fbb285c2e5f82e86bdac4fab2376a0fe991ccebf67a",
+    "static/ledger-model.js": "d95e043976722cac7656bb5ea44165962f2a69a4efab54d3faec927a7b0358e9",
+    "static/ledger-editor.css": "7919ef05820c1af020a97d1f761d2b55e0fdf4187794789d3c7a172144fc0e55",
+    "fixtures/cases.json": "8e3a58ce05b9c47d4a75012d69fd073057897b8660f2ec987bb84f55fa00397d",
+    "fixtures/balance-cases.json": "b5befe52ed0dc46e2210f18196c4f67327ab840cf0a4dd950fa1383edf15073a",
+    "demo/replay.js": "8f3a621c051bec819c5c0a7f932e42ff4edda2c3e8c5048e22d8cb35b20ebb90",
+    "demo/replay.html": "49b9509ed01a17101bc653469484580ee891004d832bf8664060d7c4658fa811",
+    "evidence/clocked-recorded-review-20261030.json": "5a0046f38c071de7c3d7d0725163a42121d286e165cbd986764e24800a6c1654"
+  },
+  "private_browser_evidence_sha256": "727cd0718e2c2bdc7dcda7a40783e6b7655a723deb4e65127195a167b5d689fe",
+  "focused_check_receipt_sha256": "f94371d1ebe26b7ee1b4d992d34048d12fdc3f203491870b5b9b14fac4270131",
+  "visible_audit": {
+    "path": "compact-ledger-visible-audit-20261102.json",
+    "sha256": "152c67bc55abf5928e2e9aff313349b6e4dfc51f9e88194233bbd8f6cbae8dba",
+    "origin": "Parsed verbatim JSON from the rendered Exact balance audit in the actual restored-ready DOM snapshot, not a download or reconstructed full export.",
+    "source_snapshot_sha256": "33c5bd9094df65ed1bc3b732d55075f6f6c4ad9b8922ae25e92e4a9b6edfaa9e",
+    "ledger_hash_verified": true,
+    "arithmetic_check": "1000.00 - 400.00 = 600.00 available; 600.00 - 600.00 = 0.00 remaining.",
+    "full_export_payload": false
+  },
+  "full_export_data": {
+    "path": "compact-ledger-readonly-export-20261102.json",
+    "bytes": 6698,
+    "sha256": "707cfb4bb142e931ea9f3ab0c5f4baea0de434eab9e3db875a7a4177b9e38100",
+    "origin": "Permitted read-only inspection of exact global lexical lastResult using the same JSON.stringify(lastResult,null,2) expression as the export button. No page mutation, download retry or server restart.",
+    "run_id_verified": true,
+    "source_document_fingerprint_verified": true,
+    "all_13_field_spans_and_document_ownership_verified": true,
+    "all_12_checks_true": true,
+    "balance_matches_rendered_audit": true,
+    "provider_trace_empty": true,
+    "browser_download_success": false
+  },
+  "affected_http_case": {
+    "name": "LocalHTTPTests.test_local_workflow_and_static_assets",
+    "result": "PASS",
+    "scope": "New ledger static assets load; reviewing without ledger returns HOLD/REVIEW_REQUIRED with unknown remaining balance and no provider trace.",
+    "test_sha256": "f1153e702bb3e2710d5d2aee2ccb5606314af782ba8328dfed270e0bea6e6dba",
+    "wall_seconds": 1.208,
+    "child_cpu_seconds": 0.139,
+    "controller_cpu_seconds": 0.043,
+    "owned_group_absent": true,
+    "receipt_sha256": "25b5dcda512e8d95e4acd2d70aeb8888ea98f52bbbf9a85f2b71d25c461c7aa8"
+  }
+}

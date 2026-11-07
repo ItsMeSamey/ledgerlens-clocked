@@ -1,0 +1,250 @@
+{
+  "app": "LedgerLens",
+  "policy_version": 2,
+  "run_id": "b1972de4-8d59-4695-b75b-e089f5374805",
+  "mode": "offline",
+  "mode_label": "OFFLINE TEMPLATE DEMO - no Clocked API calls",
+  "source_sha256": "9fddd82efd42841c83b69557fd186b2eb23b43840fec9a0075d80254d002cd78",
+  "source": "=== INVOICE SOURCE ===\nINVOICE\nVendor: Paperbark Office Co\nInvoice number: INV-CURRENT\nPO reference: PO-BALANCE\nCurrency: AUD\nSubtotal: 600.00\nTax: 0.00\nTotal: 600.00\nDue date: 12 November 2026\nPayment terms: Net 14 days\n=== PURCHASE ORDER SOURCE ===\nPURCHASE ORDER\nPO number: PO-BALANCE\nVendor: Paperbark Office Co\nCurrency: AUD\nAuthorized total: 1,000.00",
+  "ranges": {
+    "invoice": [
+      23,
+      220
+    ],
+    "order": [
+      251,
+      356
+    ]
+  },
+  "classification": {
+    "label": "invoice",
+    "confidence": null,
+    "probabilities": {}
+  },
+  "fields": {
+    "vendor": {
+      "value": "Paperbark Office Co",
+      "start": 39,
+      "end": 58
+    },
+    "invoice_id": {
+      "value": "INV-CURRENT",
+      "start": 75,
+      "end": 86
+    },
+    "purchase_order_id": {
+      "value": "PO-BALANCE",
+      "start": 101,
+      "end": 111
+    },
+    "currency": {
+      "value": "AUD",
+      "start": 122,
+      "end": 125
+    },
+    "subtotal": {
+      "value": "600.00",
+      "start": 136,
+      "end": 142
+    },
+    "tax": {
+      "value": "0.00",
+      "start": 148,
+      "end": 152
+    },
+    "total": {
+      "value": "600.00",
+      "start": 160,
+      "end": 166
+    },
+    "due_date": {
+      "value": "12 November 2026",
+      "start": 177,
+      "end": 193
+    },
+    "order_id": {
+      "value": "PO-BALANCE",
+      "start": 277,
+      "end": 287
+    },
+    "order_vendor": {
+      "value": "Paperbark Office Co",
+      "start": 296,
+      "end": 315
+    },
+    "order_currency": {
+      "value": "AUD",
+      "start": 326,
+      "end": 329
+    },
+    "order_total": {
+      "value": "1,000.00",
+      "start": 348,
+      "end": 356
+    },
+    "payment_terms": {
+      "value": "Net 14 days",
+      "start": 209,
+      "end": 220
+    }
+  },
+  "status": "READY_FOR_REVIEW",
+  "checks": [
+    {
+      "code": "document_type",
+      "ok": true,
+      "description": "Document is classified as an invoice.",
+      "fields": []
+    },
+    {
+      "code": "required_facts",
+      "ok": true,
+      "description": "Required facts present.",
+      "fields": []
+    },
+    {
+      "code": "po_reference",
+      "ok": true,
+      "description": "Invoice PO reference matches the supplied order.",
+      "fields": [
+        "purchase_order_id",
+        "order_id"
+      ]
+    },
+    {
+      "code": "supplier",
+      "ok": true,
+      "description": "Invoice supplier matches the order supplier.",
+      "fields": [
+        "vendor",
+        "order_vendor"
+      ]
+    },
+    {
+      "code": "currency",
+      "ok": true,
+      "description": "Both documents use the same supported currency (AUD, USD, EUR, GBP, NZD, CAD or SGD).",
+      "fields": [
+        "currency",
+        "order_currency"
+      ]
+    },
+    {
+      "code": "nonnegative_subtotal",
+      "ok": true,
+      "description": "Subtotal is nonnegative.",
+      "fields": [
+        "subtotal"
+      ]
+    },
+    {
+      "code": "nonnegative_tax",
+      "ok": true,
+      "description": "Tax is nonnegative.",
+      "fields": [
+        "tax"
+      ]
+    },
+    {
+      "code": "nonnegative_total",
+      "ok": true,
+      "description": "Total is nonnegative.",
+      "fields": [
+        "total"
+      ]
+    },
+    {
+      "code": "nonnegative_order_total",
+      "ok": true,
+      "description": "Order total is nonnegative.",
+      "fields": [
+        "order_total"
+      ]
+    },
+    {
+      "code": "arithmetic",
+      "ok": true,
+      "description": "Subtotal + tax equals invoice total (difference 0.00).",
+      "fields": [
+        "subtotal",
+        "tax",
+        "total"
+      ]
+    },
+    {
+      "code": "order_limit",
+      "ok": true,
+      "description": "Invoice is within the order's authorized total (remaining 400.00).",
+      "fields": [
+        "total",
+        "order_total"
+      ]
+    },
+    {
+      "code": "cumulative_po_balance",
+      "ok": true,
+      "description": "AUD 400.00 prior commitments + 600.00 current invoice against 1000.00 PO; remaining 0.00. Based only on the declared complete ledger as of 2026-10-31; current invoice excluded from prior spend.",
+      "fields": [
+        "total",
+        "order_total"
+      ]
+    }
+  ],
+  "handoff": {
+    "review_team": "Accounts payable",
+    "review_note": "Human review required. Document and declared ledger checks are consistent.",
+    "note_source": "deterministic template",
+    "payment_terms": {
+      "value": "Net 14 days",
+      "start": 209,
+      "end": 220
+    }
+  },
+  "trace": [],
+  "limitations": "Review aid only. No payment action. PO balance uses only an explicitly complete, dated local commitment ledger; completeness is not independently verified. Supplier/PO/invoice IDs ignore case and whitespace. Credits, reversals and conflicting ledger rows require review. No delivery, cross-ledger duplicate-invoice, tax-law or bank-detail checks. Confidence thresholds remain uncalibrated.",
+  "balance_policy_version": 1,
+  "balance": {
+    "status": "WITHIN_BALANCE",
+    "prior_committed": "400.00",
+    "current_invoice": "600.00",
+    "remaining_before": "600.00",
+    "remaining_after": "0.00",
+    "contributing_rows": [
+      {
+        "invoice_id": "INV-PRIOR",
+        "vendor": "Paperbark Office Co",
+        "po_id": "PO-BALANCE",
+        "currency": "AUD",
+        "amount": "400.00",
+        "kind": "invoice",
+        "status": "committed",
+        "row_number": 1
+      }
+    ],
+    "excluded_current_rows": [],
+    "ledger": {
+      "vendor": "Paperbark Office Co",
+      "po_id": "PO-BALANCE",
+      "currency": "AUD",
+      "complete": true,
+      "as_of": "2026-10-31",
+      "context": "Fictional demonstration only: all prior and pending commitments, including tax, through this date. No real account data.",
+      "rows": [
+        {
+          "invoice_id": "INV-PRIOR",
+          "vendor": "Paperbark Office Co",
+          "po_id": "PO-BALANCE",
+          "currency": "AUD",
+          "amount": "400.00",
+          "kind": "invoice",
+          "status": "committed"
+        }
+      ]
+    },
+    "ledger_sha256": "14584722d1c90cd07066922178c033abc4e25286e7dbf70aa9fa66ac55ed7c01",
+    "description": "AUD 400.00 prior commitments + 600.00 current invoice against 1000.00 PO; remaining 0.00. Based only on the declared complete ledger as of 2026-10-31; current invoice excluded from prior spend.",
+    "currency": "AUD",
+    "as_of": "2026-10-31",
+    "authorized_total": "1000.00"
+  }
+}

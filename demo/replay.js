@@ -14,8 +14,13 @@ async function frameReady() {
   }
   if (ready) {
     const page = frame.contentDocument;
-    for (const id of ['run','mode','example']) page.getElementById(id).disabled = true;
+    for (const id of ['run','mode','example','balance-run']) page.getElementById(id).disabled = true;
     page.getElementById('invoice').readOnly = page.getElementById('order').readOnly = true;
+    page.getElementById('ledger').readOnly = true;
+    page.getElementById('ledger').value = '';
+    frame.contentWindow.syncLedgerEditor();
+    frame.contentWindow.setLedgerReadOnly(true);
+    page.getElementById('balance-result').textContent = 'Historical viewer: this saved review predates cumulative PO balance checks. No ledger is asserted.';
     page.getElementById('run').textContent = 'Saved example only';
     page.getElementById('mode-pill').textContent = 'Saved example';
     page.getElementById('live-note').textContent = 'This viewer cannot start a review or call Clocked.';
@@ -41,6 +46,12 @@ document.getElementById('load').addEventListener('click', async () => {
     page.getElementById('order').value = points.slice(...review.ranges.order).join('');
     page.getElementById('mode-pill').textContent = 'Recorded live result';
     frame.contentWindow.render(review);
+    page.getElementById('balance-run').disabled = true;
+    page.getElementById('ledger').readOnly = true;
+    page.getElementById('ledger').value = '';
+    frame.contentWindow.syncLedgerEditor();
+    frame.contentWindow.setLedgerReadOnly(true);
+    page.getElementById('balance-result').textContent = 'Historical viewer: this saved review predates cumulative PO balance checks. Its original checks and exported evidence are unchanged; no ledger is asserted.';
     loaded = true;
     for (const id of ['review','highlight','export']) document.getElementById(id).disabled = false;
     statusLine.textContent = 'Saved review loaded: twelve original facts plus invoice payment terms. Human review remains necessary.';

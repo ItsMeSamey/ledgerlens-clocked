@@ -16,6 +16,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
+from po_balance import purchase_order_balance
 
 ROOT = Path(__file__).resolve().parent
 API_BASE = "https://clocked.rezolve.ai/clocked"
@@ -366,6 +367,38 @@ def review(invoice, order, mode="offline", client=None, journal=None, run_id=Non
             "limitations": "Review aid only. No payment action. No delivery, duplicate-invoice, tax-law, bank-detail or cumulative PO checks. Confidence thresholds are provisional and uncalibrated."}
 
 
+def refresh_balance(invoice, order, previous, ledger):
+    """Reconcile retained source-linked facts locally; never call a provider or journal."""
+    source, ranges = sources(invoice, order)
+    if not isinstance(previous, dict) or previous.get("source") != source:
+        raise ReviewError("Review these unchanged documents before recalculating the ledger.")
+    fields = validate_fields(previous.get("fields"), source, ranges)
+    mode = previous.get("mode")
+    if mode not in {"offline", "live"}:
+        raise ReviewError("The retained review mode is invalid.")
+    classification = previous.get("classification")
+    if not isinstance(classification, dict) or classification.get("label") not in {"invoice", "quote", "credit_note", "not_established"}:
+        raise ReviewError("The retained classification is invalid.")
+    if mode == "live":
+        confidence = classification.get("confidence")
+        if type(confidence) not in (int, float) or not math.isfinite(confidence) or not 0 <= confidence <= 1:
+            raise ReviewError("The retained classification confidence is invalid.")
+    _, checks = reconcile(fields, classification, mode)
+    balance = purchase_order_balance(fields, ledger)
+    if classification["label"] != "invoice":
+        balance.update(status="REVIEW_REQUIRED", description="Credit notes and non-invoice documents require review; no cumulative allowance is established.")
+    checks.append({"code": "cumulative_po_balance", "ok": balance["status"] == "WITHIN_BALANCE",
+                   "description": balance["description"], "fields": ["total", "order_total"]})
+    result = {**previous, "balance_policy_version": 1, "balance": balance, "checks": checks,
+              "status": "READY_FOR_REVIEW" if all(check["ok"] for check in checks) else "HOLD",
+              "limitations": "Review aid only. No payment action. PO balance uses only an explicitly complete, dated local commitment ledger; completeness is not independently verified. Supplier/PO/invoice IDs ignore case and whitespace. Credits, reversals and conflicting ledger rows require review. No delivery, cross-ledger duplicate-invoice, tax-law or bank-detail checks. Confidence thresholds remain uncalibrated."}
+    if previous["handoff"]["note_source"] != "generated":
+        failures = [check["description"] for check in checks if not check["ok"]]
+        result["handoff"] = {**previous["handoff"], "review_team": "Supplier clarification" if failures else "Accounts payable",
+                             "review_note": "Human review required. " + (" ".join(failures) if failures else "Document and declared ledger checks are consistent.")}
+    return result
+
+
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, *_):
         pass
@@ -384,8 +417,11 @@ class Handler(BaseHTTPRequestHandler):
         if self.path == "/api/config":
             return self.respond(200, {"live_enabled": self.server.live_enabled, "max_text": MAX_TEXT, "policy_version": POLICY_VERSION})
         if self.path == "/api/examples":
-            return self.respond(200, json.loads((ROOT / "fixtures" / "cases.json").read_text()))
+            return self.respond(200, json.loads((ROOT / "fixtures" / "balance-cases.json").read_text())
+                                + json.loads((ROOT / "fixtures" / "cases.json").read_text()))
         paths = {"/": ("index.html", "text/html; charset=utf-8"), "/app.js": ("app.js", "text/javascript; charset=utf-8"),
+                 "/ledger-model.js": ("ledger-model.js", "text/javascript; charset=utf-8"),
+                 "/ledger-editor.css": ("ledger-editor.css", "text/css; charset=utf-8"),
                  "/style.css": ("style.css", "text/css; charset=utf-8")}
         if self.path not in paths:
             return self.respond(404, {"error": "Not found"})
@@ -393,7 +429,7 @@ class Handler(BaseHTTPRequestHandler):
         self.respond(200, (ROOT / "static" / file).read_bytes(), kind)
 
     def do_POST(self):
-        if self.path != "/api/review":
+        if self.path not in {"/api/review", "/api/balance"}:
             return self.respond(404, {"error": "Not found"})
         # Browser same-origin requests only; the service binds to loopback.
         origin = self.headers.get("Origin")
@@ -406,6 +442,9 @@ class Handler(BaseHTTPRequestHandler):
             data = json.loads(self.rfile.read(length))
             if not isinstance(data, dict):
                 raise ReviewError("Expected a JSON object.")
+            if self.path == "/api/balance":
+                return self.respond(200, refresh_balance(data.get("invoice"), data.get("order", ""),
+                                                        data.get("result"), data.get("ledger")))
             mode = data.get("mode", "offline")
             if mode == "live" and not self.server.live_enabled:
                 raise ReviewError("Live mode is disabled. The server requires an API key and explicit free-credit confirmation.")
@@ -414,6 +453,7 @@ class Handler(BaseHTTPRequestHandler):
             try:
                 result = review(data.get("invoice"), data.get("order", ""), mode,
                                 self.server.client, self.server.journal, data.get("run_id"))
+                result = refresh_balance(data.get("invoice"), data.get("order", ""), result, data.get("ledger"))
             finally:
                 self.server.review_lock.release()
             return self.respond(200, result)

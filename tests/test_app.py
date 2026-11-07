@@ -254,15 +254,18 @@ class LocalHTTPTests(unittest.TestCase):
         self.thread.join()
 
     def test_local_workflow_and_static_assets(self):
-        for path in ('/', '/app.js', '/style.css', '/api/config', '/api/examples'):
+        for path in ('/', '/app.js', '/style.css', '/ledger-model.js', '/ledger-editor.css', '/api/config', '/api/examples'):
             with urlopen(self.url+path) as response:
                 self.assertEqual(response.status,200)
                 self.assertGreater(len(response.read()),10)
         request = Request(self.url+'/api/review',data=json.dumps(BASE | {'mode':'offline'}).encode(),headers={'Content-Type':'application/json'})
         with urlopen(request) as response:
             result = json.load(response)
-        self.assertEqual(result['status'],'READY_FOR_REVIEW')
+        self.assertEqual(result['status'],'HOLD')
+        self.assertEqual(result['balance']['status'],'REVIEW_REQUIRED')
+        self.assertIsNone(result['balance']['remaining_after'])
         self.assertEqual(result['mode'],'offline')
+        self.assertEqual(result['trace'],[])
 
     def test_live_cannot_be_selected_when_disabled(self):
         request = Request(self.url+'/api/review',data=json.dumps(BASE | {'mode':'live'}).encode())

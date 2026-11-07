@@ -1,0 +1,44 @@
+{
+  "status": "WITHIN_BALANCE",
+  "prior_committed": "400.00",
+  "current_invoice": "600.00",
+  "remaining_before": "600.00",
+  "remaining_after": "0.00",
+  "contributing_rows": [
+    {
+      "invoice_id": "INV-PRIOR",
+      "vendor": "Paperbark Office Co",
+      "po_id": "PO-BALANCE",
+      "currency": "AUD",
+      "amount": "400.00",
+      "kind": "invoice",
+      "status": "committed",
+      "row_number": 1
+    }
+  ],
+  "excluded_current_rows": [],
+  "ledger": {
+    "vendor": "Paperbark Office Co",
+    "po_id": "PO-BALANCE",
+    "currency": "AUD",
+    "complete": true,
+    "as_of": "2026-10-31",
+    "context": "Fictional demonstration only: all prior and pending commitments, including tax, through this date. No real account data.",
+    "rows": [
+      {
+        "invoice_id": "INV-PRIOR",
+        "vendor": "Paperbark Office Co",
+        "po_id": "PO-BALANCE",
+        "currency": "AUD",
+        "amount": "400.00",
+        "kind": "invoice",
+        "status": "committed"
+      }
+    ]
+  },
+  "ledger_sha256": "14584722d1c90cd07066922178c033abc4e25286e7dbf70aa9fa66ac55ed7c01",
+  "description": "AUD 400.00 prior commitments + 600.00 current invoice against 1000.00 PO; remaining 0.00. Based only on the declared complete ledger as of 2026-10-31; current invoice excluded from prior spend.",
+  "currency": "AUD",
+  "as_of": "2026-10-31",
+  "authorized_total": "1000.00"
+}

@@ -57,6 +57,7 @@ document.getElementById('load').addEventListener('click', async () => {
     statusLine.textContent = 'Saved review loaded: twelve original facts plus invoice payment terms. Human review remains necessary.';
   } catch (error) {
     statusLine.textContent = error.message;
+    document.getElementById('load').disabled = false;
   }
 });
 document.getElementById('review').addEventListener('click', () => {

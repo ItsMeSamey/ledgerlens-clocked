@@ -28,7 +28,11 @@ function highlight(name) {
   $('source').replaceChildren(document.createTextNode(points.slice(0, field.start).join('')), mark,
     document.createTextNode(points.slice(field.end).join('')));
   $('evidence-label').textContent = `${labels[name]} / characters ${field.start}-${field.end}`;
-  document.querySelectorAll('.fact').forEach(button => button.classList.toggle('selected', button.dataset.name === name));
+  document.querySelectorAll('.fact').forEach(button => {
+    const selected = button.dataset.name === name;
+    button.classList.toggle('selected', selected);
+    button.setAttribute('aria-current', String(selected));
+  });
   mark.scrollIntoView({block:'nearest',behavior:'auto'});
 }
 function render(result) {
@@ -61,6 +65,7 @@ function render(result) {
     button.className = 'fact' + (field.value === null ? ' missing' : '');
     button.dataset.name = name;
     button.disabled = field.value === null;
+    button.setAttribute('aria-current', 'false');
     const label = document.createElement('small');
     label.textContent = labels[name];
     const value = document.createElement('span');

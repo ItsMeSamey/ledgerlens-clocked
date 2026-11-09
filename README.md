@@ -64,7 +64,7 @@ node --check static/app.js
 
 ## Provenance and limits
 
-AI-assisted implementation created specifically for this challenge; no earlier application code was reused. All included documents are fictional. Python standard library and browser platform APIs are used; no vendored application code or third-party application runtime dependencies. The separate edited video was encoded with FFmpeg/libx264 and rendered DejaVu Sans/Mono text; tool and font binaries are not bundled. Confidence thresholds are provisional and uncalibrated. The stdlib server is for local development/demo use.
+Implementation created specifically for this challenge; no earlier application code was reused. All included documents are fictional. Python standard library and browser platform APIs are used; no vendored application code or third-party application runtime dependencies. The separate edited video was encoded with FFmpeg/libx264 and rendered DejaVu Sans/Mono text; tool and font binaries are not bundled. Confidence thresholds are provisional and uncalibrated. The stdlib server is for local development/demo use.
 
 [DEVELOPMENT_LOG.md](DEVELOPMENT_LOG.md) records actual work and limitations. The first local Git checkpoint was made on October 29; earlier work was not recorded in Git and history is not backdated. No public repository, demo upload or contest submission is implied by this private package.
 
